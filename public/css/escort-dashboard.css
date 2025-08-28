@@ -1,0 +1,54 @@
+:root{
+	--primary-background:#ff6cec;
+}
+
+
+/*
+------------------------------------------------------------------------------------
+   Profile Settings Page
+------------------------------------------------------------------------------------
+*/
+
+.escort-dashboard input{
+   border: 1px solid var(--primary-background);
+   border-radius: 50px;
+}
+
+.escort-dashboard select{
+   border: 1px solid var(--primary-background)!important;
+   border-radius: 50px;
+}
+
+.escort-dashboard .form-check .form-check-label input[type="checkbox"] + .input-helper:before{
+   border: 2px solid var(--primary-background);
+   border-radius: 5px;
+}
+
+.escort-dashboard .form-check .form-check-label input[type="checkbox"]:checked + .input-helper:before{
+   background:var(--primary-background)!important;
+}
+
+.escort-dashboard textarea{
+   border: 1px solid var(--primary-background);
+}
+
+.escort-dashboard button{
+  background:var(--primary-background);
+  border: 1px solid var(--primary-background);
+  border-radius: 50px;
+}
+
+.upload-id, .upload-photo{
+	min-height: 140px;
+	width: 100%;
+	border: 3px dashed var(--primary-background);
+	border-radius: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.upload-icon , .upload-photo-icon{
+	 color:var(--primary-background);
+	 font-size: 30px;
+}

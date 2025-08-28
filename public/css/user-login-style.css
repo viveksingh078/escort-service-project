@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+:root{
+  --primary-color:#ba2171;
+  --primary-text:;
+  --secoundry-color: ;
+  --secoundry-text: ;
+  --primary-background: ;
+  --secoundry-background: ;
+  --primary-font:'Poppins', sans-serif;
+}
+
+body{
+  background: #fff;
+}
+
+.login-page {
+  font-family: var(--primary-font)!important;
+  background: linear-gradient(135deg, #ba2171 0%, rgba(157, 0, 255, 0.4) 50%, #ba2171 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
+
+.glass-card {
+  background: ghostwhite;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  width: 90%;
+  max-width: 450px;
+  padding: 2.5rem;
+  margin: 1rem;
+  z-index: 10;
+}
+
+.input-field {
+  background: rgba(255, 255, 255, 0.1)!important;
+  border: 1px solid var(--primary-color)!important;
+  border-radius: 50px!important;
+  padding: 15px 20px!important;
+  color: #000!important;
+  transition: all 0.3s ease!important;
+  width: 100%!important;
+}
+
+.input-field:focus {
+  background: rgba(255, 255, 255, 0.15)!important;
+  outline: none!important;
+  border-color: var(--primary-color)!important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2)!important;
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-login {
+  background: linear-gradient(45deg, #9d00ff, #ff00ff);
+  color: white!important;
+  border-radius: 50px!important;
+  padding: 15px 0!important;
+  transition: all 0.3s ease!important;
+  border: none!important;
+  font-weight: 600!important;
+  letter-spacing: 1px!important;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(157, 0, 255, 0.4);
+}
+
+.title {
+  background: linear-gradient(90deg, #101042, #ba2171);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  font-weight: 900;
+}
+
+.sphere {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0px);
+  animation: float 15s infinite ease-in-out;
+  opacity: 0.8;
+}
+
+.sphere-1 {
+  width: 250px;
+  height: 250px;
+  top: 10%;
+  left: 10%;
+  background: radial-gradient(circle at 30% 30%, #ff00ff 0%, #9d00ff 100%);
+  animation-delay: 0s;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border:3px solid #fff;
+}
+
+.sphere-2 {
+  width: 180px;
+  height: 180px;
+  bottom: 35%;
+  right: 15%;
+  background: radial-gradient(circle at 30% 30%, #00ffcc 0%, #0099ff 100%);
+  animation-delay: 3s;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border:3px solid #fff;
+}
+
+.sphere-3 {
+  width: 120px;
+  height: 120px;
+  top: 70%;
+  left: 17%;
+  background: radial-gradient(circle at 30% 30%, #ffcc00 0%, #ff6600 100%);
+  animation-delay: 6s;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border:3px solid #fff;
+}
+
+@keyframes float {
+  0%, 100% {
+   transform: translateY(0) rotate(0deg);
+  }
+  50% {
+   transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+.show-password{
+  position: relative;
+}
+
+.show-password-btn{
+  position: absolute;
+  right: 10px;
+  top: 43px;
+  border: none;
+  background: transparent;
+}
+
+.show-password-icon{
+font-size: 18px;
+}

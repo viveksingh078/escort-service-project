@@ -14,7 +14,11 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
+<<<<<<< HEAD
         "petzsch/laravel-btcpay": "^6.0",
+=======
+        "petzsch/laravel-btcpay": "*",
+>>>>>>> 3e30dce (Escort Laravel Project)
         "yajra/laravel-datatables-oracle": "^12.4"
     },
     "require-dev": {

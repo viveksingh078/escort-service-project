@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "b1dbf16074cc9f53e2cb4e31463a818f",
+=======
+    "content-hash": "509e898aa19efa2ee27c6800ff0a8f7a",
+>>>>>>> 3e30dce (Escort Laravel Project)
     "packages": [
         {
             "name": "bacon/bacon-qr-code",

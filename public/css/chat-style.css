@@ -1,0 +1,350 @@
+.user-img-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.online-dot {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.user_li{
+    cursor: pointer;
+}
+
+
+.chat-footer{
+    position: relative;
+}
+
+.chat-footer-btn{
+    border:none;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 2px;
+    padding: 10px;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;*/
+}
+
+.chat-footer-input{
+    border-radius: 50px;
+    padding: 0px 50px 0px 90px;
+}
+
+.chat-footer-btn-emoji{
+    position: absolute;
+    left: 5px;
+}
+
+.chat-footer-btn-attach{
+    position: absolute;
+    left: 45px;
+}
+
+.chat-footer-btn-send{
+    position: absolute;
+    right: 20px;
+}
+
+.chat-body{
+    height: 360px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#search{
+     border-radius: 50px;
+}
+
+.filter-btn{
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    background: transparent;
+    border-radius: 50px;
+    font-size: 12px;
+    padding: 0px 5px;
+}
+
+.msg-left-header-filters{
+   margin:0px 0px 8px 0px;
+}
+
+
+.user-row-li{
+    display: grid;
+    grid-template-columns: 50px auto 50px;
+    width: 100%;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0, 0.1);
+    cursor: pointer;
+    padding: 2px 0px !important;
+}
+
+
+.user-row-content .username{
+   font-size: 12px;
+   font-weight: bold;
+}
+
+.user-row-content .description{
+   font-size: 12px;
+   color: rgba(0, 0, 0, 0.5);
+}
+
+.user-row-meta .user-row-meta-text{
+   font-size: 10px;
+   color: rgba(0, 0, 0, 0.5);
+}
+
+.user-row-img-wrapper{
+    height: 50px;
+    width: 50px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.online-icon{
+    position: absolute;
+    font-size: 10px;
+    color: #4cea95;
+    top: 4px;
+    right: 2px;
+    border: 2px solid #fff;
+    border-radius: 50px;
+}
+
+.user-row-meta-msg{
+    font-size: 11px;
+    background: #f980bb;
+    color: #fff;
+    border-radius: 50px;
+    height: 18px;
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-row-content {
+    padding: 0px 0px 0px 4px;
+}
+
+.user-row-li:hover{
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.user-row-li.active{
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.chat-header-li{
+    display: grid;
+    grid-template-columns: 50px auto 40px 40px 40px 25px;
+    padding: 5px 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.chat-header-li-btn{
+    border: none;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+}
+
+.chat-header-li-content .username{
+   font-size: 12px;
+   font-weight: bold;
+}
+
+.chat-header-li-content .description{
+   font-size: 12px;
+   color: rgba(0, 0, 0, 0.5);
+}
+
+.msg-left-header-filters .active{
+    background: #f980bb;
+    color: #fff;
+    border:1px solid #f980bb;
+}
+
+.msg-left-body {
+    height: 385px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+/* width */
+.msg-left-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.msg-left-body::-webkit-scrollbar-track {
+  /*background: #f1f1f1;*/
+}
+
+/* Handle */
+.msg-left-body::-webkit-scrollbar-thumb {
+  /*background: #888;*/
+}
+
+/* Handle on hover */
+.msg-left-body::-webkit-scrollbar-thumb:hover {
+  background: #f1f1f1;
+}
+
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
+
+#chat-body {
+    padding: 10px;
+}
+
+.message {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    clear: both;
+}
+
+.message.you {
+    background-color: #dcf8c6;
+    float: right;
+    text-align: right;
+}
+
+.message.other {
+    background-color: #f1f0f0;
+    float: left;
+    text-align: left;
+}
+
+.message .text {
+    font-size: 14px;
+}
+
+.message .attachment {
+    margin-top: 5px;
+}
+
+.message .chat-image {
+    max-width: 100px;
+    border-radius: 5px;
+    margin-top: 5px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.message .download-btn {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #000;
+}
+
+.message .time {
+    font-size: 11px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.no-chat {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #999;
+}
+
+
+.incomming-btn{
+   border-radius: 100%;
+   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+   height: 50px;
+   width: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 4px;
+}
+
+.accept-call{
+    background: #35c235;
+    color: #fff;
+}
+
+.reject-call{
+    background: #e84b4f;
+    color: #fff;
+}
+
+.incomming-btn:hover{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #fff;
+}
+
+.incoming-call-box{
+    display: grid;
+    grid-template-columns: 62px auto 132px;
+    background: whitesmoke;
+    border-radius: 50px ;
+    background: linear-gradient(133deg, white, #f7e6ee);
+    margin: 0px 20px;
+}
+
+.incoming-box{
+    display: flex;
+    align-items: center;
+    margin: 0px 10px ;
+}
+
+/* Force Bootstrap modal to fullscreen on all devices */
+.modal-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-fullscreen .modal-content {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.modal-backdrop {
+  background-color: black;
+}

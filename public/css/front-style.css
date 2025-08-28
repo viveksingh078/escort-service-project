@@ -1,0 +1,382 @@
+/* font family  */
+
+@import url('https://fonts.googleapis.com/css2?family=Holtwood+One+SC&display=swap');
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Black.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-BlackItalic.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Bold.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-BoldItalic.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}*/
+
+/*@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Italic.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Light.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-LightItalic.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Medium.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-MediumItalic.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}*/
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Regular.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-Thin.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/fontfamily/Roboto-ThinItalic.woff2') format('woff2'),
+         url('/fonts/fontfamily/Roboto-ThinItalic.woff') format('woff');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}*/
+
+
+
+/* font family  */
+
+
+
+/*common css  */
+
+*,*::before,*::after{
+	padding:0;
+	margin:0;
+	box-sizing:border-box;
+}
+
+html{
+	scroll-behavior: smooth;
+}
+
+body{
+	font-size:1rem;
+	font-family: 'Roboto';
+}
+
+select {
+  font-family: 'Roboto'!important;
+}
+
+option {
+  font-family: 'Roboto'!important;
+}
+
+
+h1,h2,h3,h4,h5,h5,h6,ul,p,ul{
+	margin:0;
+}
+
+h1{
+    font-family: "Holtwood One SC", serif;
+}
+
+ul{
+	list-style:none;
+}
+
+a,a:hover{
+	text-decoration:none;
+}
+
+img{
+	max-width:100%;
+	width:100%;
+}
+
+.f-18{
+    font-size: 18px;
+}
+
+.f-12{
+    font-size: 12px;
+}
+
+
+.fs-14{
+    font-size: 14px!important;
+}
+
+.f-26{
+    font-size: 26px;
+}
+.f-10{
+    font-size: 10px;
+}
+
+.w-24{
+    width: 24px!important;
+    object-fit: cover;
+}
+.br-15{
+    border-radius: 15px;
+}
+
+.br-25{
+    border-radius: 25px!important;
+}
+
+.h-45{
+    height: 45px;
+}
+
+.border-light{
+    border-color:rgba(224, 232, 242, 0.6)!important;
+}
+:root {
+  --main-color: #EEBF01;
+  --purple-color: #282041;
+  --btn-color:#9b3b2b;
+  --bg-black:#000;
+  --pane-padding: 5px 42px;
+  --blue-light:#F0F9FF;
+  --bg-orange:#EE5729;
+  --grey:#828282;
+  --light-main:#F7CC5C;
+  --light-red:#E8555A;
+
+}
+
+.tags span{
+max-width: 32px;
+display: inline-block;
+}
+
+
+.tags {
+    position:absolute;
+    top:15px;
+    display: flex;
+    flex-direction: column;
+    left: 5px;
+}
+
+.tags .tag-1{
+z-index: 1;
+}
+
+.tags .tag-2{
+top:-10px;
+z-index: 2;
+}
+
+.tags .tag-3{
+top:-20px;
+z-index: 3;
+}
+
+main{
+    background-color: #f6f6f6    
+}
+
+.bg-grey{
+    background-color: var(--grey);
+}
+
+.bg-main-light{
+    background-color: var(--main-color);
+}
+
+.bg-light-red{
+    background-color: var(--light-red);
+}
+
+.text-main{
+    color: var(--main-color);
+}
+
+.bg-main{
+    background-color: var(--main-color);
+}
+
+.text-grey{
+    color: var(--grey);
+}
+
+.fw-500{
+    font-weight: 500;
+}
+.fw-600{
+    font-weight: 600;
+}
+.zindex-99{
+    z-index: 99!important;
+}
+
+.otherFilters label {
+    font-size: 13px;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    color: #1f1f1f;
+    border: 1px solid #d1cfcf;
+    border-radius: 18px;
+    -webkit-border-radius: 18px;
+    padding-left: 14px;
+    padding-right: 16px;
+    display: block;
+    position: relative;
+    background-color: #fff;
+    min-width: 50px;   
+    line-height: 32px;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+@media (min-width: 1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1200px;
+  }
+}
+
+
+.onOverlay {
+  opacity: 0;
+  transition: opacity 1s ease;
+  background: rgba(5, 5, 5, 0.74);
+  height: 100%;
+  width: 100%;
+ }
+
+ .card:hover .onOverlay {
+  opacity:1;
+}
+.search_top_center{    
+top:5px
+}
+
+.page-link{
+    color:#000
+}
+
+.pagination .active .page-link {
+    background-color: var(--main-color)!important;
+    border:none
+}
+
+.image_container{
+    height: 250px;
+}
+
+.image_container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.navbar-toggler.collapsed {
+    border: none;
+}
+
+
+.btn-check:focus + .btn, .btn:focus, .form-select:focus, .form-control:focus {
+    box-shadow: none;
+}
+
+@media screen and (max-width: 768px) {
+header{
+    display: flex;
+    flex-direction: column-reverse;
+}
+.navbar-toggler:active:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+.image_container{
+    height: 350px;
+}
+}
+
+.btn-hover:hover{
+color: #fff !important;
+}
+
+.btn-hover{
+    border:1px solid #ced4da
+}
