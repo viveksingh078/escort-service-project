@@ -35,10 +35,12 @@ Route::get('/payment/{invoice_id}', [HomeController::class, 'showPaymentPage'])-
 // Webhook for BTCPay confirmation
 Route::post('/btcpay-webhook', [HomeController::class, 'handleWebhook'])->name('btcpay.webhook');
 
-// Temporary payment success route
-Route::get('/payment-success', function () {
-  return 'Payment Successful!'; // Replace with proper view later
-})->name('payment.success');
+// web.php
+Route::get('/payment-success', fn() => view('thankyou'))->name('payment.success');
+Route::get('/payment-failed', function () {
+  return view('payment-failed');
+})->name('payment.failed');
+Route::get('/payment-result', [HomeController::class, 'paymentResult'])->name('payment.result');
 
 Route::group(['prefix' => '/'], function () {
   Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');

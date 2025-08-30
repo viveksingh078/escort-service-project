@@ -137,18 +137,20 @@ class HomeController extends Controller
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json',
             ])->post("{$btcpayUrl}/api/v1/stores/{$storeId}/invoices", [
-                // Interpret subscription_price as BTC amount per your requirement (e.g., 0.001)
-                'amount' => (float) $amount,
-                'currency' => 'BTC',
-                'metadata' => [
-                    'orderId' => (string) $billing->id,
-                    'customerEmail' => auth('fan')->user()->email,
-                ],
-                'checkout' => [
-                    'redirectURL' => route('payment.success'),
-                ],
-                'notificationUrl' => route('btcpay.webhook'),
-            ]);
+                        // Interpret subscription_price as BTC amount per your requirement (e.g., 0.001)
+                        'amount' => (float) $amount,
+                        'currency' => 'BTC',
+                        'metadata' => [
+                            'orderId' => (string) $billing->id,
+                            'customerEmail' => auth('fan')->user()->email,
+                        ],
+                        'checkout' => [
+                            'redirectURL' => route('payment.result') . '?invoiceId={InvoiceId}',
+                            'redirectAutomatically' => true,
+                        ],
+
+                        'notificationUrl' => route('btcpay.webhook'),
+                    ]);
 
             if ($response->successful()) {
                 $invoice = $response->json();
@@ -225,4 +227,35 @@ class HomeController extends Controller
 
         return response('OK', 200);
     }
+
+    public function paymentResult(Request $request)
+    {
+        $invoiceId = $request->query('invoiceId');
+        if (!$invoiceId) {
+            return redirect()->route('payment.failed'); // agar id missing hai
+        }
+
+        $btcpayUrl = rtrim(config('btcpay.host'), '/');
+        $storeId = config('btcpay.store_id');
+        $apiKey = config('btcpay.api_key');
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $apiKey,
+            'Content-Type' => 'application/json',
+        ])->get("{$btcpayUrl}/api/v1/stores/{$storeId}/invoices/{$invoiceId}");
+
+        if (!$response->successful()) {
+            return redirect()->route('payment.failed');
+        }
+
+        $invoice = $response->json();
+        $status = $invoice['status'] ?? null;
+
+        if ($status === 'Settled') {
+            return redirect()->route('payment.success');
+        } else {
+            return redirect()->route('payment.failed');
+        }
+    }
+
 }
