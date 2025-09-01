@@ -18,6 +18,7 @@ class HomeController extends Controller
         $categories = EscortCategory::withCount('escorts')->get();
         $escorts = User::where('role', 'escort')
             ->with('usermeta')
+            ->latest() 
             ->paginate(9);
         return view('homepage', compact('categories', 'escorts'));
     }

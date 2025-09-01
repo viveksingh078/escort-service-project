@@ -239,8 +239,7 @@ class SettingController extends Controller
             )
             ->groupBy('ec.id', 'ec.name', 'ec.slug')
             ->orderBy('ec.name')
-            ->get(); // 👈 ye stdClass objects ka collection aayega, jisme escorts_count ALREADY hoga
-
+            ->get(); 
         return view('homepage', compact('categories'));
     }
 
