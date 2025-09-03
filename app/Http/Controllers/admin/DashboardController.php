@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\SubscriptionPlan;
 use App\Models\Feature;
 use Yajra\DataTables\DataTables;
+use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;                  // for path helper if needed
+
+
 
 class DashboardController extends Controller
 {
@@ -40,10 +45,10 @@ class DashboardController extends Controller
     return view('admin.escort');
   }
 
-  public function escortManage()
-  {
-    return view('admin.escort-manage');
-  }
+  // public function escortManage()
+  // {
+  //   return view('admin.escort-manage');
+  // }
 
   public function fanCategory()
   {
@@ -455,6 +460,213 @@ class DashboardController extends Controller
   public function paymentGateway()
   {
     return view('admin.payment-gateway');
+  }
+
+  public function escortManage(Request $request)
+  {
+    if ($request->ajax()) {
+      $data = User::where('role', 'escort')->with('usermeta');
+
+      if ($request->has('search') && $request->search['value']) {
+        $search = $request->search['value'];
+        $data->where(function ($q) use ($search) {
+          $q->where('name', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%");
+        });
+      }
+
+      return Datatables::of($data)
+        ->addIndexColumn()
+        ->addColumn('profile_picture', function ($row) {
+          $photo = $row->usermeta->where('meta_key', 'profile_picture')->first();
+          return $photo ? $photo->meta_value : 'images/default-profile.png';
+        })
+        ->addColumn('action', function ($row) {
+          return '<button class="btn btn-sm btn-info viewEscortBtn" data-id="' . $row->id . '">View</button>
+                        <button class="btn btn-sm btn-warning editEscortBtn" data-id="' . $row->id . '">Edit</button>
+                        <button class="btn btn-sm btn-danger delEscortBtn" data-id="' . $row->id . '">Delete</button>';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
+
+    return view('admin.escort-manage');
+  }
+
+  public function store(Request $request)
+  {
+    try {
+      $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'profile_picture' => 'nullable|image|max:2048',
+      ]);
+
+      $user = new User();
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->role = 'escort';
+      $user->password = bcrypt('defaultpassword'); // Default password, adjust as needed
+
+      if ($request->hasFile('profile_picture')) {
+        $fileName = time() . '.' . $request->profile_picture->extension();
+        $request->profile_picture->storeAs('public/profiles', $fileName);
+        $user->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'profiles/' . $fileName]);
+      }
+
+      $user->save();
+
+      return response()->json(['success' => true, 'message' => 'Escort added successfully!']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Validation failed.',
+        'errors' => $e->errors()
+      ], 422);
+    } catch (\Exception $e) {
+      \Log::error('StoreEscort error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed to add escort. Please try again.'
+      ], 500);
+    }
+  }
+
+  public function deleteEscort($id)
+  {
+    try {
+      $escort = User::where('role', 'escort')->findOrFail($id);
+
+      if (method_exists($escort, 'usermeta')) {
+        $photoMeta = $escort->usermeta->where('meta_key', 'profile_picture')->first();
+        if ($photoMeta && $photoMeta->meta_value) {
+          $value = $photoMeta->meta_value;
+          if (Str::startsWith($value, 'storage/')) {
+            $value = substr($value, 8);
+          }
+          if (Storage::disk('public')->exists($value)) {
+            Storage::disk('public')->delete($value);
+          }
+        }
+        $escort->usermeta()->delete();
+      }
+
+      $escort->delete();
+
+      return response()->json([
+        'success' => true,
+        'message' => 'Escort deleted successfully.'
+      ], 200);
+    } catch (\Exception $e) {
+      \Log::error('DeleteEscort error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed to delete escort. Please try again.'
+      ], 500);
+    }
+  }
+
+  public function viewEscort($id)
+  {
+    try {
+      $escort = User::where('role', 'escort')->with('usermeta')->findOrFail($id);
+      $profile_picture = $escort->usermeta->where('meta_key', 'profile_picture')->first()
+        ? $escort->usermeta->where('meta_key', 'profile_picture')->first()->meta_value
+        : null;
+
+      return response()->json([
+        'success' => true,
+        'data' => [
+          'id' => $escort->id,
+          'name' => $escort->name,
+          'email' => $escort->email,
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+        ]
+      ], 200);
+    } catch (\Exception $e) {
+      \Log::error('ViewEscort error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed to load escort details.'
+      ], 500);
+    }
+  }
+
+  public function editEscort($id)
+  {
+    try {
+      $escort = User::where('role', 'escort')->with('usermeta')->findOrFail($id);
+      $profile_picture = $escort->usermeta->where('meta_key', 'profile_picture')->first()
+        ? $escort->usermeta->where('meta_key', 'profile_picture')->first()->meta_value
+        : null;
+
+      return response()->json([
+        'success' => true,
+        'data' => [
+          'id' => $escort->id,
+          'name' => $escort->name,
+          'email' => $escort->email,
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+        ]
+      ], 200);
+    } catch (\Exception $e) {
+      \Log::error('EditEscort error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed to load escort for editing.'
+      ], 500);
+    }
+  }
+
+  public function updateEscort(Request $request, $id)
+  {
+    try {
+      $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'profile_picture' => 'nullable|image|max:2048',
+      ]);
+
+      $escort = User::where('role', 'escort')->findOrFail($id);
+      $escort->name = $request->name;
+      $escort->email = $request->email;
+
+      if ($request->hasFile('profile_picture')) {
+        // Delete old picture if exists
+        $oldPhotoMeta = $escort->usermeta->where('meta_key', 'profile_picture')->first();
+        if ($oldPhotoMeta && $oldPhotoMeta->meta_value) {
+          $value = $oldPhotoMeta->meta_value;
+          if (Str::startsWith($value, 'storage/')) {
+            $value = substr($value, 8);
+          }
+          if (Storage::disk('public')->exists($value)) {
+            Storage::disk('public')->delete($value);
+          }
+          $oldPhotoMeta->delete();
+        }
+
+        // Upload new picture
+        $fileName = time() . '.' . $request->profile_picture->extension();
+        $request->profile_picture->storeAs('public/profiles', $fileName);
+        $escort->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'profiles/' . $fileName]);
+      }
+
+      $escort->save();
+
+      return response()->json(['success' => true, 'message' => 'Escort updated successfully!']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Validation failed.',
+        'errors' => $e->errors()
+      ], 422);
+    } catch (\Exception $e) {
+      \Log::error('UpdateEscort error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Failed to update escort. Please try again.'
+      ], 500);
+    }
   }
 
 }

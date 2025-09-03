@@ -125,6 +125,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('/subscription/update/{id}', [AdminDashboardController::class, 'updatePlan'])->name('admin.subscription.update');
     Route::delete('/subscription/delete/{id}', [AdminDashboardController::class, 'deletePlan'])->name('subscription.destroy');
 
+    // Escort Management
+    Route::get('/escorts', [AdminDashboardController::class, 'escortManage'])->name('admin.escorts.index');
+    Route::delete('/escorts/{id}', [AdminDashboardController::class, 'deleteEscort'])->name('admin.escorts.destroy');
+    Route::post('/escorts', [AdminDashboardController::class, 'store'])->name('admin.escorts.store');
+    Route::get('/escorts/{id}/view', [AdminDashboardController::class, 'viewEscort'])->name('admin.escorts.view');
+    Route::get('/escorts/{id}/edit', [AdminDashboardController::class, 'editEscort'])->name('admin.escorts.edit');
+    Route::put('/escorts/{id}', [AdminDashboardController::class, 'updateEscort'])->name('admin.escorts.update');
+
     Route::get('/features', [AdminDashboardController::class, 'features'])->name('admin.features');
     Route::get('/features/list', [AdminDashboardController::class, 'getFeatures'])->name('admin.features.list');
     Route::post('/features', [AdminDashboardController::class, 'storeFeature'])->name('admin.features.store');

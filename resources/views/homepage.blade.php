@@ -591,89 +591,116 @@
   <!-- Billing Modal -->
 
   <div class="modal fade" id="billingModal" tabindex="-1" aria-labelledby="billingModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content bg-dark">
-        <div class="modal-header border-bottom border-secondary">
-          <h5 class="modal-title" id="billingModalLabel" style="color: #ffffff;"> Payment for Your Chosen
-            Escort: <span id="billing-escort-name" style="color: #ffffff;"></span></h5>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content billing-card">
+        <div class="modal-header border-0">
+          <h5 class="modal-title text-white fw-bold">
+            Payment for Your Chosen Escort:
+            <span id="billing-escort-name" class="text-pink"></span>
+          </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body p-3">
-          <p class="text-light mb-2">Login User: {{ Auth::guard('fan')->user()->username ?? 'Guest' }}</p>
-          <p class="text-light mb-2">Price: <span id="billing-price" style="color: #ffffff;"></span></p>
+        <div class="modal-body">
+          <p class="text-light mb-1">Login User: {{ Auth::guard('fan')->user()->username ?? 'Guest' }}</p>
+          <p class="text-light mb-3">Price: <span id="billing-price" class="fw-bold text-pink"></span></p>
+
           <form id="billing-form" action="{{ route('billing') }}">
             @csrf
             <input type="hidden" id="billing-escort-id" name="escort_id">
-            <div class="row mb-2">
-              <div class="col-6 pe-1">
-                <label for="first-name" class="form-label text-light small">First Name</label>
-                <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="first-name"
-                  name="first_name" required>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control custom-input" name="first_name" placeholder="First Name" required>
               </div>
-              <div class="col-6 ps-1">
-                <label for="last-name" class="form-label text-light small">Last Name</label>
-                <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="last-name"
-                  name="last_name" required>
+              <div class="col-md-6">
+                <input type="text" class="form-control custom-input" name="last_name" placeholder="Last Name" required>
               </div>
-            </div>
-            <div class="mb-2">
-              <label for="address" class="form-label text-light small">Address (Main street 1234)</label>
-              <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="address" name="address"
-                required>
-            </div>
-            <div class="row mb-2">
-              <div class="col-6 pe-1">
-                <label for="city" class="form-label text-light small">City</label>
-                <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="city" name="city"
-                  required>
+              <div class="col-12">
+                <input type="text" class="form-control custom-input" name="address"
+                  placeholder="Address (Main street 1234)" required>
               </div>
-              <div class="col-6 ps-1">
-                <label for="state" class="form-label text-light small">State</label>
-                <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="state" name="state"
-                  required>
+              <div class="col-md-6">
+                <input type="text" class="form-control custom-input" name="city" placeholder="City" required>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control custom-input" name="state" placeholder="State" required>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control custom-input" name="zip_code" placeholder="Zip Code" required>
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control custom-input" name="country" placeholder="Country" required>
               </div>
             </div>
-            <div class="row mb-2">
-              <div class="col-6 pe-1">
-                <label for="zip" class="form-label text-light small">Zip Code</label>
-                <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="zip" name="zip_code"
-                  required>
-              </div>
-              <div class="col-6 ps-1">
-                <label for="country" class="form-label text-light small">Country</label>
-                <input type="text" class="form-control bg-secondary text-light border-0 p-1" id="country" name="country"
-                  required>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-pink w-100 p-1">Continue to Checkout</button>
+
+            <button type="submit" class="btn btn-pink w-100 mt-4 py-2 fw-bold rounded-pill">
+              Continue to Checkout
+            </button>
           </form>
         </div>
       </div>
-      <style>
-        /* Make billing modal wider */
-        #billingModal .modal-dialog { max-width: 720px; }
-        .btn-pink {
-          background-color: #ff1493;
-          border-color: #ff1493;
-          color: white;
-          font-size: 0.9rem;
-          padding: 0.25rem 0;
-        }
-
-        .btn-pink:hover {
-          background-color: #c71585;
-          border-color: #c71585;
-        }
-
-        .modal-content.bg-dark {
-          background-color: #1e1e1e !important;
-        }
-
-        .form-control.bg-secondary {
-          background-color: #2c2c2c !important;
-        }
-      </style>
     </div>
+  </div>
+
+  <style>
+    /* Card Style */
+    .billing-card {
+      background: #1c1c1c;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      padding: 15px;
+    }
+
+    /* Inputs */
+    .custom-input {
+      background: #2b2b2b;
+      border: 1px solid #444;
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      transition: all 0.3s ease;
+    }
+
+    .custom-input:focus {
+      border-color: #ff007f;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+      outline: none;
+      background: #222;
+    }
+
+    .custom-input::placeholder {
+      color: #aaa;
+    }
+
+    /* Button */
+    .btn-pink {
+      background: linear-gradient(135deg, #ff007f, #ff4081);
+      border: none;
+      color: #fff;
+      transition: 0.3s;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-pink:hover {
+      background: linear-gradient(135deg, #ff4081, #ff007f);
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.8);
+      transform: translateY(-2px);
+    }
+
+    /* Text color helper */
+    .text-pink {
+      color: #ff4081;
+    }
+
+    #billing-form input {
+      color: #fff;
+
+
+    }
+  </style>
+
+  </div>
   </div>
   </div>
 
@@ -730,200 +757,200 @@
             package: this.dataset.package
           };
 
-            fetch('{{ route("check-auth") }}', {
-              headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Accept': 'application/json'
-    }
+          fetch('{{ route("check-auth") }}', {
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json'
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (!data.isAuthenticated) {
+                $('#loginModal').modal('show');
+              } else {
+                document.getElementById('billing-escort-name').textContent = selectedEscort.name;
+                document.getElementById('billing-price').textContent = selectedEscort.price;
+                document.getElementById('billing-escort-id').value = selectedEscort.id;
+                $('#billingModal').modal('show');
+              }
             })
-      .then(response => response.json())
-      .then(data => {
-        if (!data.isAuthenticated) {
-          $('#loginModal').modal('show');
-        } else {
-          document.getElementById('billing-escort-name').textContent = selectedEscort.name;
-          document.getElementById('billing-price').textContent = selectedEscort.price;
-          document.getElementById('billing-escort-id').value = selectedEscort.id;
-          $('#billingModal').modal('show');
-        }
-      })
-      .catch(error => console.error('Error checking auth:', error));
-          });
+            .catch(error => console.error('Error checking auth:', error));
         });
+      });
 
-    // Handle login form submit with AJAX
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-      loginForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
+      // Handle login form submit with AJAX
+      const loginForm = document.getElementById('login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
 
-        fetch(this.action, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept': 'application/json'
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              $('#loginModal').modal('hide');
-              window.location.reload();
-            } else {
+          fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json'
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                $('#loginModal').modal('hide');
+                window.location.reload();
+              } else {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger mt-3';
+                errorDiv.textContent = data.error || 'Login failed. Please check your credentials.';
+                loginForm.prepend(errorDiv);
+                setTimeout(() => errorDiv.remove(), 5000);
+              }
+            })
+            .catch(error => {
+              console.error('Login error:', error);
               const errorDiv = document.createElement('div');
               errorDiv.className = 'alert alert-danger mt-3';
-              errorDiv.textContent = data.error || 'Login failed. Please check your credentials.';
+              errorDiv.textContent = 'An error occurred. Please try again.';
               loginForm.prepend(errorDiv);
               setTimeout(() => errorDiv.remove(), 5000);
+            });
+        });
+      }
+
+      // Handle billing form submit
+      const billingForm = document.getElementById('billing-form');
+      if (billingForm) {
+        billingForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          fetch('{{ route("billing") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json'
             }
           })
-          .catch(error => {
-            console.error('Login error:', error);
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'alert alert-danger mt-3';
-            errorDiv.textContent = 'An error occurred. Please try again.';
-            loginForm.prepend(errorDiv);
-            setTimeout(() => errorDiv.remove(), 5000);
-          });
-      });
-    }
-
-    // Handle billing form submit
-    const billingForm = document.getElementById('billing-form');
-    if (billingForm) {
-      billingForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        fetch('{{ route("billing") }}', {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept': 'application/json'
-          }
-        })
-        .then(async (response) => {
-          const isJson = response.headers.get('content-type')?.includes('application/json');
-          const data = isJson ? await response.json() : null;
-          if (response.ok && data && data.success && data.url) {
-            window.location.href = data.url; // redirect to BTCPay payment page
-            return;
-          }
-          if (response.redirected) {
-            window.location.href = response.url;
-            return;
-          }
-          const msg = data?.message || 'Invoice creation failed';
-          alert(msg);
-        })
-        .catch(error => alert('Error: ' + error));
-      });
-    }
-
-    // Load more escorts
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', function () {
-        const currentPage = parseInt(this.getAttribute('data-page'));
-        const loadText = this.querySelector('.load-text');
-        const loadingText = this.querySelector('.loading-text');
-
-        loadText.classList.add('d-none');
-        loadingText.classList.remove('d-none');
-        this.disabled = true;
-
-        fetch(`/load-more-escorts?page=${currentPage}`, {
-          method: 'GET',
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept': 'application/json'
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success && data.html) {
-              const container = document.getElementById('escorts-container');
-              const tempDiv = document.createElement('div');
-              tempDiv.innerHTML = data.html;
-
-              const newCards = tempDiv.querySelectorAll('.escort-card-item');
-              newCards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                container.appendChild(card);
-                setTimeout(() => {
-                  card.style.transition = 'all 0.5s ease';
-                  card.style.opacity = '1';
-                  card.style.transform = 'translateY(0)';
-                }, index * 100);
-
-                const newCardElement = card.querySelector('.escort-card');
-                if (newCardElement) {
-                  newCardElement.addEventListener('click', function () {
-                    if (isBackNavigation) {
-                      isBackNavigation = false;
-                      return;
-                    }
-
-                    selectedEscort = {
-                      id: this.dataset.escortId,
-                      name: this.dataset.name,
-                      price: this.dataset.price,
-                      package: this.dataset.package
-                    };
-                        fetch('{{ route("check-auth") }}', {
-                          headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
+            .then(async (response) => {
+              const isJson = response.headers.get('content-type')?.includes('application/json');
+              const data = isJson ? await response.json() : null;
+              if (response.ok && data && data.success && data.url) {
+                window.location.href = data.url; // redirect to BTCPay payment page
+                return;
               }
-                        })
-          .then(response => response.json())
-          .then(data => {
-            if (!data.isAuthenticated) {
-              $('#loginModal').modal('show');
-            } else {
-              document.getElementById('billing-escort-name').textContent = selectedEscort.name;
-              document.getElementById('billing-price').textContent = selectedEscort.price;
-              document.getElementById('billing-escort-id').value = selectedEscort.id;
-              $('#billingModal').modal('show');
+              if (response.redirected) {
+                window.location.href = response.url;
+                return;
+              }
+              const msg = data?.message || 'Invoice creation failed';
+              alert(msg);
+            })
+            .catch(error => alert('Error: ' + error));
+        });
+      }
+
+      // Load more escorts
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function () {
+          const currentPage = parseInt(this.getAttribute('data-page'));
+          const loadText = this.querySelector('.load-text');
+          const loadingText = this.querySelector('.loading-text');
+
+          loadText.classList.add('d-none');
+          loadingText.classList.remove('d-none');
+          this.disabled = true;
+
+          fetch(`/load-more-escorts?page=${currentPage}`, {
+            method: 'GET',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json'
             }
           })
-          .catch(error => console.error('Error checking auth:', error));
-      });
-    }
-                  });
+            .then(response => response.json())
+            .then(data => {
+              if (data.success && data.html) {
+                const container = document.getElementById('escorts-container');
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = data.html;
 
-    if (data.hasMorePages) {
-      this.setAttribute('data-page', currentPage + 1);
-      loadText.classList.remove('d-none');
-      loadingText.classList.add('d-none');
-      this.disabled = false;
-    } else {
-      this.style.display = 'none';
-      const completionMsg = document.createElement('div');
-      completionMsg.className = 'text-center mt-3';
-      completionMsg.innerHTML = '<p class="text-muted">All escorts loaded</p>';
-      container.parentNode.appendChild(completionMsg);
-    }
+                const newCards = tempDiv.querySelectorAll('.escort-card-item');
+                newCards.forEach((card, index) => {
+                  card.style.opacity = '0';
+                  card.style.transform = 'translateY(20px)';
+                  container.appendChild(card);
+                  setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                  }, index * 100);
+
+                  const newCardElement = card.querySelector('.escort-card');
+                  if (newCardElement) {
+                    newCardElement.addEventListener('click', function () {
+                      if (isBackNavigation) {
+                        isBackNavigation = false;
+                        return;
+                      }
+
+                      selectedEscort = {
+                        id: this.dataset.escortId,
+                        name: this.dataset.name,
+                        price: this.dataset.price,
+                        package: this.dataset.package
+                      };
+                      fetch('{{ route("check-auth") }}', {
+                        headers: {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'Accept': 'application/json'
+                        }
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          if (!data.isAuthenticated) {
+                            $('#loginModal').modal('show');
+                          } else {
+                            document.getElementById('billing-escort-name').textContent = selectedEscort.name;
+                            document.getElementById('billing-price').textContent = selectedEscort.price;
+                            document.getElementById('billing-escort-id').value = selectedEscort.id;
+                            $('#billingModal').modal('show');
+                          }
+                        })
+                        .catch(error => console.error('Error checking auth:', error));
+                    });
+                  }
+                });
+
+                if (data.hasMorePages) {
+                  this.setAttribute('data-page', currentPage + 1);
+                  loadText.classList.remove('d-none');
+                  loadingText.classList.add('d-none');
+                  this.disabled = false;
                 } else {
-      loadText.textContent = 'Error loading escorts';
-      loadText.classList.remove('d-none');
-      loadingText.classList.add('d-none');
-      this.disabled = false;
-    }
-              })
-              .catch (error => {
-      console.error('Error:', error);
-      loadText.textContent = 'Error loading escorts';
-      loadText.classList.remove('d-none');
-      loadingText.classList.add('d-none');
-      this.disabled = false;
+                  this.style.display = 'none';
+                  const completionMsg = document.createElement('div');
+                  completionMsg.className = 'text-center mt-3';
+                  completionMsg.innerHTML = '<p class="text-muted">All escorts loaded</p>';
+                  container.parentNode.appendChild(completionMsg);
+                }
+              } else {
+                loadText.textContent = 'Error loading escorts';
+                loadText.classList.remove('d-none');
+                loadingText.classList.add('d-none');
+                this.disabled = false;
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              loadText.textContent = 'Error loading escorts';
+              loadText.classList.remove('d-none');
+              loadingText.classList.add('d-none');
+              this.disabled = false;
+            });
+        });
+      }
     });
-          });
-        }
-      });
 
   </script>
 @endsection
