@@ -1,6 +1,9 @@
 @extends('admin.layout')
 @section('title', 'Escort Manage')
 @section('content')
+  <!-- Ensure CSRF token is available -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <div class="container-fluid p-0 m-0 py-4">
     <div class="container py-5 px-5 bg-white">
       <div class="d-flex justify-content-between align-items-center">
@@ -131,6 +134,12 @@
 
   <script>
     jQuery(document).ready(function ($) {
+      // Ensure CSRF token is set for all AJAX calls
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
 
       // Load Escort Table
       function loadEscorts() {
@@ -162,10 +171,10 @@
               searchable: false,
               render: function (data, type, row) {
                 return `
-                                                            <button class="btn btn-sm btn-info viewEscortBtn" data-id="${row.id}">View</button>
-                                                            <button class="btn btn-sm btn-warning editEscortBtn" data-id="${row.id}">Edit</button>
-                                                            <button class="btn btn-sm btn-danger delEscortBtn" data-id="${row.id}">Delete</button>
-                                                        `;
+                                                    <button class="btn btn-sm btn-info viewEscortBtn" data-id="${row.id}">View</button>
+                                                    <button class="btn btn-sm btn-warning editEscortBtn" data-id="${row.id}">Edit</button>
+                                                    <button class="btn btn-sm btn-danger delEscortBtn" data-id="${row.id}">Delete</button>
+                                                  `;
               }
             }
           ]
@@ -177,7 +186,6 @@
         e.preventDefault();
 
         let formData = new FormData(this);
-        formData.append('_token', '{{ csrf_token() }}');
         formData.append('role', 'escort');
 
         $.ajax({
@@ -219,7 +227,7 @@
           $.ajax({
             url: '{{ route("admin.escorts.destroy", ":id") }}'.replace(':id', id),
             type: 'DELETE',
-            data: { _token: '{{ csrf_token() }}' },
+            data: { _token: $('meta[name="csrf-token"]').attr('content') },
             success: function (res) {
               if (res.success) {
                 loadEscorts();
@@ -241,12 +249,11 @@
         $.ajax({
           url: '{{ route("admin.escorts.view", ":id") }}'.replace(':id', id),
           type: 'GET',
-          data: { _token: '{{ csrf_token() }}' },
+          data: { _token: $('meta[name="csrf-token"]').attr('content') },
           success: function (response) {
             if (response.success) {
               $('#view_name').text(response.data.name);
               $('#view_email').text(response.data.email);
-              // Fix: Sahi path join karne ke liye '/' ensure karo
               let profilePicture = response.data.profile_picture ?
                 '{{ asset("storage") }}/' + response.data.profile_picture :
                 '{{ asset("images/default-profile.png") }}';
@@ -268,18 +275,18 @@
         $.ajax({
           url: '{{ route("admin.escorts.edit", ":id") }}'.replace(':id', id),
           type: 'GET',
-          data: { _token: '{{ csrf_token() }}' },
+          data: { _token: $('meta[name="csrf-token"]').attr('content') },
           success: function (response) {
             if (response.success) {
               $('#edit_id').val(response.data.id);
-              $('#edit_name').val(response.data.name);
-              $('#edit_email').val(response.data.email);
-              // Fix: Sahi path join karne ke liye '/' ensure karo
+              $('#edit_name').val(response.data.name); // Check this
+              $('#edit_email').val(response.data.email); // Check this
               let profilePicture = response.data.profile_picture ?
                 '{{ asset("storage") }}/' + response.data.profile_picture :
                 '{{ asset("images/default-profile.png") }}';
               $('#edit_current_picture').attr('src', profilePicture);
               jQuery('#editEscortModal').modal('show');
+              console.log('Edit Data Loaded:', response.data); // Debug
             } else {
               alert(response.message);
             }
@@ -295,13 +302,22 @@
         e.preventDefault();
 
         let formData = new FormData();
-        formData.append('_token', '{{ csrf_token() }}');
+        let nameValue = $('#edit_name').val();
+        let emailValue = $('#edit_email').val() + '+update' + Math.floor(Math.random() * 1000) + '@gmail.com'; // Unique email
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
         formData.append('id', $('#edit_id').val());
-        formData.append('name', $('#edit_name').val());
-        formData.append('email', $('#edit_email').val());
+        formData.append('name', nameValue);
+        formData.append('email', emailValue);
         if ($('#edit_profile_picture')[0].files[0]) {
           formData.append('profile_picture', $('#edit_profile_picture')[0].files[0]);
         }
+
+        console.log('Before Submit - Form Data:', {
+          id: $('#edit_id').val(),
+          name: nameValue,
+          email: emailValue,
+          profile_picture: $('#edit_profile_picture')[0].files[0] ? 'File present' : 'No file'
+        });
 
         $.ajax({
           url: '{{ route("admin.escorts.update", ":id") }}'.replace(':id', $('#edit_id').val()),
@@ -319,15 +335,18 @@
             }
           },
           error: function (xhr) {
+            console.log('Error Response:', xhr.responseJSON);
             if (xhr.status === 422) {
               const errors = xhr.responseJSON.errors;
-              let msg = '';
+              let msg = 'Validation Errors:\n';
               for (let field in errors) {
-                msg += errors[field].join(', ') + '\n';
+                msg += `${field}: ${errors[field].join(', ')}\n`;
               }
               alert(msg);
+            } else if (xhr.status === 419) {
+              alert("CSRF token mismatch. Please refresh the page (Ctrl + F5) and try again.");
             } else {
-              alert("Failed to update escort. Please try again.");
+              alert("Failed to update escort. Check console for details.");
             }
           }
         });

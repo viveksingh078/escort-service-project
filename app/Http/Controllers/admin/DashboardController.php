@@ -9,9 +9,7 @@ use App\Models\Feature;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;                  // for path helper if needed
-
-
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -45,11 +43,6 @@ class DashboardController extends Controller
     return view('admin.escort');
   }
 
-  // public function escortManage()
-  // {
-  //   return view('admin.escort-manage');
-  // }
-
   public function fanCategory()
   {
     return view('admin.fan-category');
@@ -58,11 +51,6 @@ class DashboardController extends Controller
   public function fanCreate()
   {
     return view('admin.fan');
-  }
-
-  public function fanManage()
-  {
-    return view('admin.fan-manage');
   }
 
   public function cities()
@@ -136,18 +124,13 @@ class DashboardController extends Controller
 
       $featureIds = [];
 
-      // Pattern 1: feature_ids[] array (from JavaScript)
       if ($request->has('feature_ids') && is_array($request->feature_ids)) {
         $featureIds = array_filter($request->feature_ids);
         \Log::info('Found feature_ids array:', ['feature_ids' => $featureIds]);
-      }
-      // Pattern 2: features[] array
-      elseif ($request->has('features') && is_array($request->features)) {
+      } elseif ($request->has('features') && is_array($request->features)) {
         $featureIds = $request->features;
         \Log::info('Found features array:', ['features' => $featureIds]);
-      }
-      // Pattern 3: Individual checkboxes (1, 2, 3, etc.)
-      else {
+      } else {
         foreach ($request->all() as $key => $value) {
           if (is_numeric($key) && $value) {
             $featureIds[] = intval($key);
@@ -198,7 +181,6 @@ class DashboardController extends Controller
   {
     $plan = SubscriptionPlan::findOrFail($id);
 
-    // Decode the feature JSON to array for checkbox pre-selection
     $featureIds = [];
     if (!empty($plan->feature)) {
       $decoded = json_decode($plan->feature, true);
@@ -211,8 +193,8 @@ class DashboardController extends Controller
       'id' => $plan->id,
       'name' => $plan->name,
       'price' => $plan->price,
-      'duration' => $plan->duration_days, // Return duration_days as duration for form
-      'feature_ids' => $featureIds // Return decoded feature IDs array
+      'duration' => $plan->duration_days,
+      'feature_ids' => $featureIds
     ]);
   }
 
@@ -462,6 +444,7 @@ class DashboardController extends Controller
     return view('admin.payment-gateway');
   }
 
+  // Escort Management Methods
   public function escortManage(Request $request)
   {
     if ($request->ajax()) {
@@ -483,8 +466,8 @@ class DashboardController extends Controller
         })
         ->addColumn('action', function ($row) {
           return '<button class="btn btn-sm btn-info viewEscortBtn" data-id="' . $row->id . '">View</button>
-                        <button class="btn btn-sm btn-warning editEscortBtn" data-id="' . $row->id . '">Edit</button>
-                        <button class="btn btn-sm btn-danger delEscortBtn" data-id="' . $row->id . '">Delete</button>';
+                            <button class="btn btn-sm btn-warning editEscortBtn" data-id="' . $row->id . '">Edit</button>
+                            <button class="btn btn-sm btn-danger delEscortBtn" data-id="' . $row->id . '">Delete</button>';
         })
         ->rawColumns(['action'])
         ->make(true);
@@ -506,7 +489,7 @@ class DashboardController extends Controller
       $user->name = $request->name;
       $user->email = $request->email;
       $user->role = 'escort';
-      $user->password = bcrypt('defaultpassword'); // Default password, adjust as needed
+      $user->password = bcrypt('defaultpassword');
 
       if ($request->hasFile('profile_picture')) {
         $fileName = time() . '.' . $request->profile_picture->extension();
@@ -621,6 +604,8 @@ class DashboardController extends Controller
   public function updateEscort(Request $request, $id)
   {
     try {
+      \Log::info('Update Request Received for ID: ' . $id . ', Raw Data: ', $request->all());
+
       $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $id,
@@ -628,16 +613,17 @@ class DashboardController extends Controller
       ]);
 
       $escort = User::where('role', 'escort')->findOrFail($id);
+      \Log::info('Existing Escort Data for ID: ' . $id . ', Data: ', $escort->toArray());
+
       $escort->name = $request->name;
       $escort->email = $request->email;
 
       if ($request->hasFile('profile_picture')) {
-        // Delete old picture if exists
         $oldPhotoMeta = $escort->usermeta->where('meta_key', 'profile_picture')->first();
         if ($oldPhotoMeta && $oldPhotoMeta->meta_value) {
           $value = $oldPhotoMeta->meta_value;
-          if (Str::startsWith($value, 'storage/')) {
-            $value = substr($value, 8);
+          if (Str::startsWith($value, 'escort/')) {
+            $value = substr($value, 7);
           }
           if (Storage::disk('public')->exists($value)) {
             Storage::disk('public')->delete($value);
@@ -645,23 +631,26 @@ class DashboardController extends Controller
           $oldPhotoMeta->delete();
         }
 
-        // Upload new picture
+        $folderName = str_replace(' ', '%20', $request->name . mt_rand(0, 99));
         $fileName = time() . '.' . $request->profile_picture->extension();
-        $request->profile_picture->storeAs('public/profiles', $fileName);
-        $escort->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'profiles/' . $fileName]);
+        $request->profile_picture->storeAs('public/escort/' . $folderName, $fileName);
+        $escort->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'escort/' . $folderName . '/' . $fileName]);
       }
 
       $escort->save();
 
+      \Log::info('Update Successful for ID: ' . $id . ', Updated Data: ', $escort->toArray());
+
       return response()->json(['success' => true, 'message' => 'Escort updated successfully!']);
     } catch (\Illuminate\Validation\ValidationException $e) {
+      \Log::error('Validation Error for ID: ' . $id . ', Errors: ', $e->errors());
       return response()->json([
         'success' => false,
         'message' => 'Validation failed.',
         'errors' => $e->errors()
       ], 422);
     } catch (\Exception $e) {
-      \Log::error('UpdateEscort error: ' . $e->getMessage());
+      \Log::error('UpdateEscort Error for ID: ' . $id . ': ' . $e->getMessage());
       return response()->json([
         'success' => false,
         'message' => 'Failed to update escort. Please try again.'
@@ -669,4 +658,220 @@ class DashboardController extends Controller
     }
   }
 
+  // Fan Management Methods
+  public function fanManage(Request $request)
+  {
+    if ($request->ajax()) {
+      $data = User::where('role', 'fan')->with('usermeta');
+
+      if ($request->has('search') && $request->search['value']) {
+        $search = $request->search['value'];
+        $data->where(function ($q) use ($search) {
+          $q->where('name', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%");
+        });
+      }
+
+      return Datatables::of($data)
+        ->addIndexColumn()
+        ->addColumn('profile_picture', function ($row) {
+          $photo = $row->usermeta->where('meta_key', 'profile_picture')->first();
+          return $photo ? $photo->meta_value : 'images/default-profile.png';
+        })
+        ->addColumn('action', function ($row) {
+          return '<button class="btn btn-sm btn-info viewFanBtn" data-id="' . $row->id . '">View</button>
+                            <button class="btn btn-sm btn-warning editFanBtn" data-id="' . $row->id . '">Edit</button>
+                            <button class="btn btn-sm btn-danger delFanBtn" data-id="' . $row->id . '">Delete</button>';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
+
+    $title = 'Manage Fan'; // Updated to "Manage Fan"
+    $role = 'fan'; // Default role
+    return view('admin.fan-manage', compact('title', 'role'));
+  }
+
+
+  public function storeFan(Request $request)
+  {
+    try {
+      $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'profile_picture' => 'nullable|image|max:2048',
+      ]);
+
+      $user = new User();
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->role = 'fan';
+      $user->password = bcrypt('defaultpassword');
+
+      if ($request->hasFile('profile_picture')) {
+        $fileName = time() . '.' . $request->profile_picture->extension();
+        $request->profile_picture->storeAs('public/profiles', $fileName);
+        $user->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'profiles/' . $fileName]);
+      }
+
+      $user->save();
+
+      return response()->json(['success' => true, 'message' => 'Fan add ho gaya successfully!']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Validation failed.',
+        'errors' => $e->errors()
+      ], 422);
+    } catch (\Exception $e) {
+      \Log::error('StoreFan error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Fan add karne mein error. Phir try karo.'
+      ], 500);
+    }
+  }
+
+  public function deleteFan($id)
+  {
+    try {
+      $fan = User::where('role', 'fan')->findOrFail($id);
+
+      if (method_exists($fan, 'usermeta')) {
+        $photoMeta = $fan->usermeta->where('meta_key', 'profile_picture')->first();
+        if ($photoMeta && $photoMeta->meta_value) {
+          $value = $photoMeta->meta_value;
+          if (Str::startsWith($value, 'storage/')) {
+            $value = substr($value, 8);
+          }
+          if (Storage::disk('public')->exists($value)) {
+            Storage::disk('public')->delete($value);
+          }
+        }
+        $fan->usermeta()->delete();
+      }
+
+      $fan->delete();
+
+      return response()->json([
+        'success' => true,
+        'message' => 'Fan delete ho gaya successfully.'
+      ], 200);
+    } catch (\Exception $e) {
+      \Log::error('DeleteFan error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Fan delete karne mein error. Phir try karo.'
+      ], 500);
+    }
+  }
+
+  public function viewFan($id)
+  {
+    try {
+      $fan = User::where('role', 'fan')->with('usermeta')->findOrFail($id);
+      $profile_picture = $fan->usermeta->where('meta_key', 'profile_picture')->first()
+        ? $fan->usermeta->where('meta_key', 'profile_picture')->first()->meta_value
+        : null;
+
+      return response()->json([
+        'success' => true,
+        'data' => [
+          'id' => $fan->id,
+          'name' => $fan->name,
+          'email' => $fan->email,
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+        ]
+      ], 200);
+    } catch (\Exception $e) {
+      \Log::error('ViewFan error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Fan details load karne mein error.'
+      ], 500);
+    }
+  }
+
+  public function editFan($id)
+  {
+    try {
+      $fan = User::where('role', 'fan')->with('usermeta')->findOrFail($id);
+      $profile_picture = $fan->usermeta->where('meta_key', 'profile_picture')->first()
+        ? $fan->usermeta->where('meta_key', 'profile_picture')->first()->meta_value
+        : null;
+
+      return response()->json([
+        'success' => true,
+        'data' => [
+          'id' => $fan->id,
+          'name' => $fan->name,
+          'email' => $fan->email,
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+        ]
+      ], 200);
+    } catch (\Exception $e) {
+      \Log::error('EditFan error: ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Fan edit karne mein error.'
+      ], 500);
+    }
+  }
+
+  public function updateFan(Request $request, $id)
+  {
+    try {
+      \Log::info('Update Request Received for ID: ' . $id . ', Raw Data: ', $request->all());
+
+      $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'profile_picture' => 'nullable|image|max:2048',
+      ]);
+
+      $fan = User::where('role', 'fan')->findOrFail($id);
+      \Log::info('Existing Fan Data for ID: ' . $id . ', Data: ', $fan->toArray());
+
+      $fan->name = $request->name;
+      $fan->email = $request->email;
+
+      if ($request->hasFile('profile_picture')) {
+        $oldPhotoMeta = $fan->usermeta->where('meta_key', 'profile_picture')->first();
+        if ($oldPhotoMeta && $oldPhotoMeta->meta_value) {
+          $value = $oldPhotoMeta->meta_value;
+          if (Str::startsWith($value, 'fan/')) {
+            $value = substr($value, 4);
+          }
+          if (Storage::disk('public')->exists($value)) {
+            Storage::disk('public')->delete($value);
+          }
+          $oldPhotoMeta->delete();
+        }
+
+        $folderName = str_replace(' ', '%20', $request->name . mt_rand(0, 99));
+        $fileName = time() . '.' . $request->profile_picture->extension();
+        $request->profile_picture->storeAs('public/fan/' . $folderName, $fileName);
+        $fan->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'fan/' . $folderName . '/' . $fileName]);
+      }
+
+      $fan->save();
+
+      \Log::info('Update Successful for ID: ' . $id . ', Updated Data: ', $fan->toArray());
+
+      return response()->json(['success' => true, 'message' => 'Fan update ho gaya successfully!']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+      \Log::error('Validation Error for ID: ' . $id . ', Errors: ', $e->errors());
+      return response()->json([
+        'success' => false,
+        'message' => 'Validation failed.',
+        'errors' => $e->errors()
+      ], 422);
+    } catch (\Exception $e) {
+      \Log::error('UpdateFan Error for ID: ' . $id . ': ' . $e->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Fan update karne mein error. Phir try karo.'
+      ], 500);
+    }
+  }
 }

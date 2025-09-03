@@ -133,6 +133,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/escorts/{id}/edit', [AdminDashboardController::class, 'editEscort'])->name('admin.escorts.edit');
     Route::put('/escorts/{id}', [AdminDashboardController::class, 'updateEscort'])->name('admin.escorts.update');
 
+    // Fan Management
+    Route::get('/fans', [AdminDashboardController::class, 'fanManage'])->name('admin.fans.index');
+    Route::delete('/fans/{id}', [AdminDashboardController::class, 'deleteFan'])->name('admin.fans.destroy');
+    Route::post('/fans', [AdminDashboardController::class, 'store'])->name('admin.fans.store');
+    Route::get('/fans/{id}/view', [AdminDashboardController::class, 'viewFan'])->name('admin.fans.view');
+    Route::get('/fans/{id}/edit', [AdminDashboardController::class, 'editFan'])->name('admin.fans.edit');
+    Route::put('/fans/{id}', [AdminDashboardController::class, 'updateFan'])->name('admin.fans.update');
+
     Route::get('/features', [AdminDashboardController::class, 'features'])->name('admin.features');
     Route::get('/features/list', [AdminDashboardController::class, 'getFeatures'])->name('admin.features.list');
     Route::post('/features', [AdminDashboardController::class, 'storeFeature'])->name('admin.features.store');
