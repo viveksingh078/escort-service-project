@@ -93,6 +93,7 @@
     </div>
   </div>
 
+
   <!-- Edit Modal -->
   <div class="modal fade" id="editEscortModal" tabindex="-1" aria-labelledby="editEscortModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -107,18 +108,18 @@
           <form id="edit-escort-form" class="small">
             @csrf
             @method('PUT')
-            <input type="hidden" id="edit_id">
+            <input type="hidden" id="edit_id" name="id">
             <div class="form-group">
               <label for="edit_name">Escort Name</label>
-              <input type="text" id="edit_name" class="form-control">
+              <input type="text" id="edit_name" name="name" class="form-control">
             </div>
             <div class="form-group">
               <label for="edit_email">Email</label>
-              <input type="email" id="edit_email" class="form-control">
+              <input type="email" id="edit_email" name="email" class="form-control">
             </div>
             <div class="form-group">
               <label for="edit_profile_picture">Profile Picture</label>
-              <input type="file" id="edit_profile_picture" class="form-control">
+              <input type="file" id="edit_profile_picture" name="profile_picture" class="form-control">
               <img id="edit_current_picture" src="" alt="Current Profile Picture" class="rounded-circle mt-2"
                 style="width: 100px; height: 100px; object-fit: cover;">
             </div>
@@ -159,7 +160,7 @@
               render: function (data, type, row) {
                 return data ?
                   `<img src="{{ asset('storage/') }}/${data}" alt="${row.name}" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">` :
-                  `<img src="{{ asset('images/default-profile.png') }}" alt="Default Profile" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">`;
+                  `<img src="{{ asset('images/default-profile.jpg') }}" alt="Default Profile" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">`;
               }
             },
             { data: 'name', name: 'name' },
@@ -171,10 +172,10 @@
               searchable: false,
               render: function (data, type, row) {
                 return `
-                                                    <button class="btn btn-sm btn-info viewEscortBtn" data-id="${row.id}">View</button>
-                                                    <button class="btn btn-sm btn-warning editEscortBtn" data-id="${row.id}">Edit</button>
-                                                    <button class="btn btn-sm btn-danger delEscortBtn" data-id="${row.id}">Delete</button>
-                                                  `;
+                                                  <button class="btn btn-sm btn-info viewEscortBtn" data-id="${row.id}">View</button>
+                                                  <button class="btn btn-sm btn-warning editEscortBtn" data-id="${row.id}">Edit</button>
+                                                  <button class="btn btn-sm btn-danger delEscortBtn" data-id="${row.id}">Delete</button>
+                                              `;
               }
             }
           ]
@@ -256,7 +257,7 @@
               $('#view_email').text(response.data.email);
               let profilePicture = response.data.profile_picture ?
                 '{{ asset("storage") }}/' + response.data.profile_picture :
-                '{{ asset("images/default-profile.png") }}';
+                '{{ asset("images/default-profile.jpg") }}';
               $('#view_profile_picture').attr('src', profilePicture);
               jQuery('#viewEscortModal').modal('show');
             } else {
@@ -279,14 +280,14 @@
           success: function (response) {
             if (response.success) {
               $('#edit_id').val(response.data.id);
-              $('#edit_name').val(response.data.name); // Check this
-              $('#edit_email').val(response.data.email); // Check this
+              $('#edit_name').val(response.data.name);
+              $('#edit_email').val(response.data.email);
               let profilePicture = response.data.profile_picture ?
                 '{{ asset("storage") }}/' + response.data.profile_picture :
                 '{{ asset("images/default-profile.png") }}';
               $('#edit_current_picture').attr('src', profilePicture);
               jQuery('#editEscortModal').modal('show');
-              console.log('Edit Data Loaded:', response.data); // Debug
+              console.log('Edit Data Loaded:', response.data);
             } else {
               alert(response.message);
             }
@@ -301,27 +302,19 @@
       $('#edit-escort-form').on('submit', function (e) {
         e.preventDefault();
 
-        let formData = new FormData();
-        let nameValue = $('#edit_name').val();
-        let emailValue = $('#edit_email').val() + '+update' + Math.floor(Math.random() * 1000) + '@gmail.com'; // Unique email
-        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        formData.append('id', $('#edit_id').val());
-        formData.append('name', nameValue);
-        formData.append('email', emailValue);
-        if ($('#edit_profile_picture')[0].files[0]) {
-          formData.append('profile_picture', $('#edit_profile_picture')[0].files[0]);
-        }
+        let formData = new FormData($('#edit-escort-form')[0]); // Direct form se data
+        formData.append('_method', 'PUT'); // For Laravel PUT
 
         console.log('Before Submit - Form Data:', {
           id: $('#edit_id').val(),
-          name: nameValue,
-          email: emailValue,
+          name: $('#edit_name').val(),
+          email: $('#edit_email').val(),
           profile_picture: $('#edit_profile_picture')[0].files[0] ? 'File present' : 'No file'
         });
 
         $.ajax({
           url: '{{ route("admin.escorts.update", ":id") }}'.replace(':id', $('#edit_id').val()),
-          type: 'PUT',
+          type: 'POST',
           data: formData,
           contentType: false,
           processData: false,

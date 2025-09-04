@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', '{{ $title ?? "Manage Fan" }}')
+@section('title', 'fan Manage')
 @section('content')
   <!-- Ensure CSRF token is available -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -159,9 +159,9 @@
               data: 'profile_picture',
               name: 'profile_picture',
               render: function (data, type, row) {
-                return data && data !== 'images/default-profile.png' ?
+                return data && data !== 'images/default-profile.jpg' ?
                   `<img src="{{ asset('storage/') }}/${data}" alt="${row.name}" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">` :
-                  `<img src="{{ asset('images/default-profile.png') }}" alt="Default Profile" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">`;
+                  `<img src="{{ asset('images/default-profile.jpg') }}" alt="Default Profile" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">`;
               }
             },
             { data: 'name', name: 'name' },
@@ -173,10 +173,10 @@
               searchable: false,
               render: function (data, type, row) {
                 return `
-                                  <button class="btn btn-sm btn-info viewFanBtn" data-id="${row.id}" data-role="${row.role}">View</button>
-                                  <button class="btn btn-sm btn-warning editFanBtn" data-id="${row.id}" data-role="${row.role}">Edit</button>
-                                  <button class="btn btn-sm btn-danger delFanBtn" data-id="${row.id}" data-role="${row.role}">Delete</button>
-                                `;
+                                                    <button class="btn btn-sm btn-info viewFanBtn" data-id="${row.id}" data-role="${row.role}">View</button>
+                                                    <button class="btn btn-sm btn-warning editFanBtn" data-id="${row.id}" data-role="${row.role}">Edit</button>
+                                                    <button class="btn btn-sm btn-danger delFanBtn" data-id="${row.id}" data-role="${row.role}">Delete</button>
+                                                  `;
               }
             }
           ]
@@ -259,7 +259,7 @@
               $('#view_email').text(response.data.email);
               let profilePicture = response.data.profile_picture ?
                 '{{ asset("storage") }}/' + response.data.profile_picture :
-                '{{ asset("images/default-profile.png") }}';
+                '{{ asset("images/default-profile.jpg") }}';
               $('#view_profile_picture').attr('src', profilePicture);
               jQuery('#viewUserModal').modal('show');
             } else {
@@ -287,7 +287,7 @@
               $('#edit_email').val(response.data.email);
               let profilePicture = response.data.profile_picture ?
                 '{{ asset("storage") }}/' + response.data.profile_picture :
-                '{{ asset("images/default-profile.png") }}';
+                '{{ asset("images/default-profile.jpg") }}';
               $('#edit_current_picture').attr('src', profilePicture);
               jQuery('#editUserModal').modal('show');
             } else {

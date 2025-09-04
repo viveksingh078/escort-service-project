@@ -462,7 +462,7 @@ class DashboardController extends Controller
         ->addIndexColumn()
         ->addColumn('profile_picture', function ($row) {
           $photo = $row->usermeta->where('meta_key', 'profile_picture')->first();
-          return $photo ? $photo->meta_value : 'images/default-profile.png';
+          return $photo ? $photo->meta_value : 'images/default-profile.jpg';
         })
         ->addColumn('action', function ($row) {
           return '<button class="btn btn-sm btn-info viewEscortBtn" data-id="' . $row->id . '">View</button>
@@ -491,13 +491,15 @@ class DashboardController extends Controller
       $user->role = 'escort';
       $user->password = bcrypt('defaultpassword');
 
-      if ($request->hasFile('profile_picture')) {
-        $fileName = time() . '.' . $request->profile_picture->extension();
-        $request->profile_picture->storeAs('public/profiles', $fileName);
-        $user->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'profiles/' . $fileName]);
-      }
-
       $user->save();
+
+      if ($request->hasFile('profile_picture')) {
+        $folderName = str_replace(' ', '%20', $request->name . mt_rand(0, 99));
+        $fileName = time() . '.' . $request->profile_picture->extension();
+        $path = $request->profile_picture->storeAs('public/escort/' . $folderName, $fileName, 'public');
+        \Log::info('Image saved at: ' . $path); // Debug line
+        $user->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'escort/' . $folderName . '/' . $fileName]);
+      }
 
       return response()->json(['success' => true, 'message' => 'Escort added successfully!']);
     } catch (\Illuminate\Validation\ValidationException $e) {
@@ -523,13 +525,10 @@ class DashboardController extends Controller
       if (method_exists($escort, 'usermeta')) {
         $photoMeta = $escort->usermeta->where('meta_key', 'profile_picture')->first();
         if ($photoMeta && $photoMeta->meta_value) {
-          $value = $photoMeta->meta_value;
-          if (Str::startsWith($value, 'storage/')) {
-            $value = substr($value, 8);
+          if (Storage::disk('public')->exists($photoMeta->meta_value)) {
+            Storage::disk('public')->delete($photoMeta->meta_value);
           }
-          if (Storage::disk('public')->exists($value)) {
-            Storage::disk('public')->delete($value);
-          }
+          $photoMeta->delete();
         }
         $escort->usermeta()->delete();
       }
@@ -563,7 +562,7 @@ class DashboardController extends Controller
           'id' => $escort->id,
           'name' => $escort->name,
           'email' => $escort->email,
-          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.jpg'
         ]
       ], 200);
     } catch (\Exception $e) {
@@ -589,7 +588,7 @@ class DashboardController extends Controller
           'id' => $escort->id,
           'name' => $escort->name,
           'email' => $escort->email,
-          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.jpg'
         ]
       ], 200);
     } catch (\Exception $e) {
@@ -621,19 +620,15 @@ class DashboardController extends Controller
       if ($request->hasFile('profile_picture')) {
         $oldPhotoMeta = $escort->usermeta->where('meta_key', 'profile_picture')->first();
         if ($oldPhotoMeta && $oldPhotoMeta->meta_value) {
-          $value = $oldPhotoMeta->meta_value;
-          if (Str::startsWith($value, 'escort/')) {
-            $value = substr($value, 7);
-          }
-          if (Storage::disk('public')->exists($value)) {
-            Storage::disk('public')->delete($value);
+          if (Storage::disk('public')->exists($oldPhotoMeta->meta_value)) {
+            Storage::disk('public')->delete($oldPhotoMeta->meta_value);
           }
           $oldPhotoMeta->delete();
         }
 
         $folderName = str_replace(' ', '%20', $request->name . mt_rand(0, 99));
         $fileName = time() . '.' . $request->profile_picture->extension();
-        $request->profile_picture->storeAs('public/escort/' . $folderName, $fileName);
+        $request->profile_picture->storeAs('public/escort/' . $folderName, $fileName, 'public');
         $escort->usermeta()->create(['meta_key' => 'profile_picture', 'meta_value' => 'escort/' . $folderName . '/' . $fileName]);
       }
 
@@ -676,7 +671,7 @@ class DashboardController extends Controller
         ->addIndexColumn()
         ->addColumn('profile_picture', function ($row) {
           $photo = $row->usermeta->where('meta_key', 'profile_picture')->first();
-          return $photo ? $photo->meta_value : 'images/default-profile.png';
+          return $photo ? $photo->meta_value : 'images/default-profile.jpg';
         })
         ->addColumn('action', function ($row) {
           return '<button class="btn btn-sm btn-info viewFanBtn" data-id="' . $row->id . '">View</button>
@@ -780,7 +775,7 @@ class DashboardController extends Controller
           'id' => $fan->id,
           'name' => $fan->name,
           'email' => $fan->email,
-          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.jpg'
         ]
       ], 200);
     } catch (\Exception $e) {
@@ -806,7 +801,7 @@ class DashboardController extends Controller
           'id' => $fan->id,
           'name' => $fan->name,
           'email' => $fan->email,
-          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.png'
+          'profile_picture' => $profile_picture ? $profile_picture : 'images/default-profile.jpg'
         ]
       ], 200);
     } catch (\Exception $e) {
