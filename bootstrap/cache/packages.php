@@ -55,17 +55,6 @@
       0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
   ),
-  'petzsch/laravel-btcpay' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Petzsch\\LaravelBtcpay\\LaravelBtcpayServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'LaravelBtcpay' => 'Petzsch\\LaravelBtcpay\\LaravelBtcpayFacade',
-    ),
-  ),
   'yajra/laravel-datatables-oracle' => 
   array (
     'aliases' => 

@@ -54,7 +54,7 @@ class PaymentGatewayController extends Controller
 
     public function paymentSuccess()
     {
-        return view('admin.payment-success')->with('message', '✅ Payment Successful! BTC Pay se confirm ho gaya.');
+        return view('admin.payment-success')->with('message', '✅ Payment Successful! .');
     }
 
     public function paymentCancel()

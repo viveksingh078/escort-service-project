@@ -72,7 +72,7 @@
                 <div class="col-md-6 mb-4">
                   <label for="profile_picture" class="form-label fw-bold small">Profile Picture</label>
 
-                  {{-- Agar profile picture pehle se hai toh dikhado --}}
+
                   @php
                     $profilePic = isset($escort)
                       ? $escort->usermeta->where('meta_key', 'profile_picture')->first()->meta_value ?? null
@@ -96,36 +96,7 @@
                   <p class="small mt-1">Upload a clear profile picture. This will be shown on your public profile.</p>
                 </div>
               </div>
-
-
-              <!-- <h5 class="mt-4">Verify your identity</h5>
-        <p class="small">We need to verify your ID before you can become an Escort.</p>
-        <hr class="p-0 my-2">
-        <div class="row mt-3">
-        <div class="col-md-3 mb-4">
-        <label for="photo_id_doc" class="form-label fw-bold small">Photo of your ID document</label>
-        <input type="file" class="form-control custom-input @error('photo_id_doc') is-invalid @enderror"
-        name="photo_id_doc" id="photo_id_doc" accept="image/*">
-        @error('photo_id_doc')
-        <p class="invalid-feedback">{{ $message }}</p>
-        @enderror
-        </div>
-        <div class="col-md-3 mb-4"></div>
-        <div class="col-md-3 mb-4">
-        <label for="photo_id" class="form-label fw-bold small">Photo of you holding your ID</label>
-        <input type="file" class="form-control custom-input @error('photo_id') is-invalid @enderror"
-        name="photo_id" id="photo_id" accept="image/*">
-        @error('photo_id')
-        <p class="invalid-feedback">{{ $message }}</p>
-        @enderror
-        </div>
-        <div class="col-md-3 mb-4"></div>
-        <div class="col-md-12 mb-4">
-        <p class="small">For your ID verification, we only accept an in-date government issued photo ID. We
-        prefer a passport. The image must be clear and visible for verification. For your photo verification
-        you should take a photo clearly showing your face, holding the ID document provided.</p>
-        </div>
-        </div> -->
+              <!-- /////  Profile Picture ///// -->
 
               <h5 class="mt-4">Setup your profile</h5>
               <p class="small">All these details what you add here are going to related to your public profile.</p>

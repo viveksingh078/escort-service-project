@@ -32,9 +32,8 @@
     28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     29 => 'Termwind\\Laravel\\TermwindServiceProvider',
     30 => 'Pest\\Laravel\\PestServiceProvider',
-    31 => 'Petzsch\\LaravelBtcpay\\LaravelBtcpayServiceProvider',
-    32 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-    33 => 'App\\Providers\\AppServiceProvider',
+    31 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    32 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -54,9 +53,8 @@
     13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Pest\\Laravel\\PestServiceProvider',
-    16 => 'Petzsch\\LaravelBtcpay\\LaravelBtcpayServiceProvider',
-    17 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-    18 => 'App\\Providers\\AppServiceProvider',
+    16 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    17 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (

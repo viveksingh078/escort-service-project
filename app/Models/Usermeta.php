@@ -9,6 +9,8 @@ class Usermeta extends Model
     protected $table = 'usermeta';
     protected $primaryKey = 'umeta_id';
     public $timestamps = false;
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = ['user_id', 'meta_key', 'meta_value'];
 

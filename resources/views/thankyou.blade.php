@@ -46,7 +46,7 @@
 
                 {{-- Auto Redirect Notice --}}
                 <p class="text-muted small mt-4">
-                    You will be redirected automatically in <span id="secs" class="fw-bold text-dark">20</span>s…
+                    You will be redirected automatically in <span id="secs" class="fw-bold text-dark">30</span>s…
                 </p>
             </div>
         </div>
@@ -84,7 +84,7 @@
     {{-- Auto Redirect + Confetti Script --}}
     <script>
         // Auto Redirect
-        let s = 20, el = document.getElementById('secs');
+        let s = 30, el = document.getElementById('secs');
         let t = setInterval(() => {
             s--; el.textContent = s;
             if (s === 0) {

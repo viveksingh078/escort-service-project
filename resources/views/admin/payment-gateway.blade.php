@@ -1,34 +1,32 @@
 @extends('admin.layout')
-@section('title', 'Payment Gateway')
+@section('title', 'Payment Gateways')
 @section('content')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <div class="container-fluid p-0 m-0 py-4">
-        <div class="container py-5 px-5 bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="pb-1">Payment Gateway</h5>
-            </div>
-            <hr class="p-0 my-3">
+  <div class="container-fluid p-0 m-0 py-4">
+      <div class="container py-5 px-5 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+              <h5 class="pb-1">Payment Gateway</h5>
+          </div>
+          <hr class="p-0 my-3">
 
-            <div class="table-responsive">
-                <table id="paymentTable" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Payment Name</th>
-                            <th>Payment Details</th>
-                            <th>Payment Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be loaded via AJAX -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+          <div class="table-responsive">
+              <table id="paymentTable" class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Gateway Name</th>
+                          <th>Gateway Status</th>
+                          <th>Payment Mode</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <!-- Rows will be loaded via AJAX -->
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
 
     <!-- Razorpay Modal -->
     <div class="modal fade" id="razorpayModal" tabindex="-1">
@@ -175,42 +173,144 @@
     </div>
 
     <script>
-        $(document).ready(function () {
+      $(document).ready(function ($) {
 
-            loadPaymentGateways();
+      loadPaymentGateways();
 
-            function loadPaymentGateways() {
-                // Payment icons mapping
-                function getPaymentIcon(name) {
-                    name = name.toLowerCase();
-                    if (name.includes("razorpay")) return `<i class="fab fa-cc-mastercard text-primary"></i>`;
-                    if (name.includes("paypal")) return `<i class="fab fa-paypal text-primary"></i>`;
-                    if (name.includes("stripe")) return `<i class="fab fa-cc-stripe text-info"></i>`;
-                    if (name.includes("btc")) return `<i class="fas fa-credit-card text-success"></i>`;
-                    return `<i class="fas fa-money-bill-wave text-secondary"></i>`; // default
-                }
+      function loadPaymentGateways() {
+          $('#paymentTable').DataTable({
+              processing: false,
+              serverSide: false,
+              destroy: true,
+              ajax: {
+                  url: "{{ route('admin.paymentGateway.list') }}",
+                  type: 'GET',
+                  dataSrc: 'data'
+              },
+              columns: [
+                  {
+                      data: 'id',
+                      render: function (data, type, row) {
+                          return row.id;
+                      }
+                  },
+                  { 
+                      data: 'name',
+                      render: function (data, type, row) {
+                          return getPaymentIcon(row.name) + " <strong>" + row.name + "</strong>";
+                      }
+                  },
+                  // === Enable/Disable toggle ===
+                  {
+                      data: 'enabled',
+                      orderable: false,
+                      searchable: false,
+                      render: function (data, type, row) {
+                          return `
+                              <label class="toggle-switch toggle-switch-success">
+                                  <input type="checkbox" class="toggleEnableSwitch"
+                                      data-gateway="${row.slug}"
+                                      ${row.enabled === 'yes' ? 'checked' : ''}>
+                                  <span class="toggle-slider round"></span>
+                              </label>`;
+                      }
+                  },
+                  // === Live/Sandbox toggle ===
+                  {
+                      data: 'mode',
+                      orderable: false,
+                      searchable: false,
+                      render: function (data, type, row) {
+                          return `
+                              <label class="toggle-switch toggle-switch-info">
+                                  <input type="checkbox" class="toggleModeSwitch"
+                                      data-gateway="${row.slug}"
+                                      ${row.mode === 'live' ? 'checked' : ''}>
+                                  <span class="toggle-slider round"></span>
+                              </label>
+                              <span class="ms-2">${row.mode === 'live' ? 'Live' : 'Sandbox'}</span>`;
+                      }
+                  },
 
-                $.get("{{ route('admin.paymentgateway.list') }}", function (res) {
-                    let rows = '';
-                    res.data.forEach((pg, index) => {
-                        let detailsObj = JSON.parse(pg.details || '{}');
-                        let detailsStr = Object.entries(detailsObj).map(([key, value]) => `${key.replace('_', ' ').toUpperCase()}: ${value || ''}`).join(', ');
-                        rows += `
-                                                                                            <tr>
-                                                                                                <td>${index + 1}</td>
-                                                                                                <td>${getPaymentIcon(pg.name)} ${pg.name}</td>
-                                                                                                <td>${detailsStr}</td>
-                                                                                                <td>${pg.status}</td>
-                                                                                                <td>
-                                                                                                    <button class="btn btn-warning btn-sm editBtn" 
-                                                                                                        data-name="${pg.name.toLowerCase().replace(' ', '-')}">Edit</button>
-                                                                                                    <button class="btn btn-danger btn-sm deleteBtn" data-name="${pg.name.toLowerCase().replace(' ', '-')}">Credential</button>
-                                                                                                </td>
-                                                                                            </tr>`;
-                    });
-                    $("#paymentTable tbody").html(rows);
-                });
-            }
+                  {
+                      data: 'action',
+                      orderable: false,
+                      searchable: false,
+                      render: function (data, type, row) {
+                          return `
+                              <button class="btn mx-2 viewBtn" data-gateway="${row.key}">
+                                  <i class="fas fa-eye text-secondary"></i> View
+                              </button>
+                              <button class="btn mx-2 editBtn" data-gateway="${row.key}">
+                                  <i class="fas fa-edit text-primary"></i> Edit
+                              </button>`;
+                      }
+                  }
+              ],
+              drawCallback: function(settings) {
+                  // === Enable toggle ===
+                  $(".toggleEnableSwitch").off("change").on("change", function () {
+                      let input = $(this);
+                      let gatewayKey = input.data("gateway");
+                      let newState = input.is(":checked") ? "yes" : "no";
+
+                      $.ajax({
+                          url: "{{ route('admin.paymentGateway.toggle') }}",
+                          type: "POST",
+                          data: {
+                              _token: "{{ csrf_token() }}",
+                              gateway: gatewayKey,
+                              enabled: newState
+                          },
+                          success: function (res) {
+                              $('#paymentTable').DataTable().ajax.reload(null, false);
+                          },
+                          error: function () {
+                              alert("Something went wrong!");
+                          }
+                      });
+                  });
+
+                  // === Mode toggle ===
+                  $(".toggleModeSwitch").off("change").on("change", function () {
+                      let input = $(this);
+                      let gatewayKey = input.data("gateway");
+                      let newMode = input.is(":checked") ? "live" : "sandbox";
+
+                      $.ajax({
+                          url: "{{ route('admin.paymentGateway.mode') }}",
+                          type: "POST",
+                          data: {
+                              _token: "{{ csrf_token() }}",
+                              gateway: gatewayKey,
+                              mode: newMode
+                          },
+                          success: function (res) {
+                              $('#paymentTable').DataTable().ajax.reload(null, false);
+                          },
+                          error: function () {
+                              alert("Something went wrong!");
+                          }
+                      });
+                  });
+              }
+          });
+      }
+
+      // Mapping payment gateway name to icons
+      function getPaymentIcon(name) {
+          name = name.toLowerCase();
+          if (name.includes("razorpay")) return `<i class="fas fa-bolt text-primary"></i>`;
+          if (name.includes("paypal")) return `<i class="fab fa-paypal text-info"></i>`;
+          if (name.includes("stripe")) return `<i class="fab fa-stripe text-success"></i>`;
+          if (name.includes("btc")) return `<i class="fab fa-btc text-warning"></i>`;
+          return `<i class="fas fa-money-bill-wave text-secondary"></i>`;
+      }
+
+
+
+
+
 
             $(document).on("click", ".editBtn", function () {
                 let gateway = $(this).data("name"); // e.g., 'btc-pay'
@@ -356,12 +456,5 @@
             }
         });
     </script>
-
-    <!-- Toastr CSS & JS -->
-    @if (!isset($toastrIncluded))
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <?php    $toastrIncluded = true; ?>
-    @endif
 
 @endsection

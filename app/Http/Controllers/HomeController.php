@@ -18,7 +18,7 @@ class HomeController extends Controller
         $categories = EscortCategory::withCount('escorts')->get();
         $escorts = User::where('role', 'escort')
             ->with('usermeta')
-            ->latest() 
+            ->latest()
             ->paginate(9);
         return view('homepage', compact('categories', 'escorts'));
     }
@@ -100,6 +100,119 @@ class HomeController extends Controller
         return response()->json(['success' => false]);
     }
 
+    public function filter(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = User::where('role', 'escort')->with('usermeta');
+
+            // Apply filters
+            if ($request->has('filters')) {
+                $filters = $request->input('filters');
+                foreach ($filters as $filter) {
+                    $query->whereHas('usermeta', function ($q) use ($filter) {
+                        $q->where('meta_key', $filter)->where('meta_value', 1);
+                    });
+                }
+            }
+
+            // Apply country filter
+            if ($request->filled('country')) {
+                $query->whereHas('usermeta', function ($q) use ($request) {
+                    $q->where('meta_key', 'country_code')->where('meta_value', $request->country);
+                });
+            }
+
+            // Apply city filter
+            if ($request->filled('city')) {
+                $query->whereHas('usermeta', function ($q) use ($request) {
+                    $q->where('meta_key', 'city')->where('meta_value', $request->city);
+                });
+            }
+
+            // Apply sort order
+            if ($request->filled('sort_order')) {
+                switch ($request->sort_order) {
+                    case 'latest':
+                        $query->orderBy('created_at', 'desc');
+                        break;
+                    case 'nearby':
+                        // Assuming 'location' or similar field for proximity sorting
+                        // This might need geolocation logic if implemented
+                        $query->orderBy('created_at', 'desc'); // Default fallback
+                        break;
+                }
+            }
+
+            $escorts = $query->paginate(9);
+
+            $html = '';
+            if ($escorts->count() > 0) {
+                foreach ($escorts as $escort) {
+                    $photo = $escort->usermeta->where('meta_key', 'profile_picture')->first()->meta_value ?? 'default.jpg';
+                    $city = $escort->usermeta->where('meta_key', 'city')->first()->meta_value ?? '';
+                    $location = $escort->usermeta->where('meta_key', 'country_code')->first()->meta_value ?? 'N/A';
+                    $price = $escort->usermeta->where('meta_key', 'subscription_price')->first()->meta_value ?? 'N/A';
+                    $package = $escort->usermeta->where('meta_key', 'package')->first()->meta_value ?? 'Basic Package';
+
+                    $html .= '<div class="col-md-4 col-6 mb-4 escort-card-item">
+                        <div class="card position-relative overflow-hidden escort-card" 
+                             data-escort-id="' . $escort->id . '" 
+                             data-name="' . $escort->name . '" 
+                             data-price="$' . $price . '" 
+                             data-package="' . $package . '">
+                            <div class="py-3">
+                                <h6 class="text-center text-main">' . $escort->name . '</h6>
+                            </div>
+                            <div class="image_container position-relative">
+                                <img src="' . asset('storage/' . $photo) . '" alt="' . $escort->name . ' Photo" class="img-fluid" />
+                                <div class="tags">
+                                    <span class="tag-1 position-relative">
+                                        <img src="' . asset('images/VIP.png') . '" alt="VIP Tag" />
+                                    </span>
+                                    <span class="tag-2 position-relative">
+                                        <img src="' . asset('images/Independent.png') . '" alt="Independent Tag" />
+                                    </span>
+                                    <span class="tag-3 position-relative">
+                                        <img src="' . asset('images/video.png') . '" alt="Video Tag" />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="image_footer py-2">
+                                <p class="text-center">Escort ' . $city . '</p>
+                            </div>
+                            <div class="onOverlay position-absolute d-flex flex-column justify-content-center align-items-center">
+                                <div class="text-white fs-6 fw-normal font-family-Inter text-uppercase m-0 px-3 py-2">
+                                    <p class="m-0 text-center">' . strtoupper($escort->name) . '</p>
+                                    <h4 class="m-0 text-center mt-1">$' . $price . '</h4>
+                                </div>
+                                <div class="col-8 mx-auto">
+                                    <p class="text-center text-white">
+                                        <span class="me-2"><i class="fa-solid fa-location-dot"></i></span>
+                                        ' . $location . '
+                                    </p>
+                                    <p class="text-center text-white mt-2">
+                                        <span class="me-2"><i class="fa-solid fa-circle text-success"></i></span>
+                                        Available
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+                }
+            } else {
+                $html = '<div class="col-12"><div class="text-center py-5"><h5 class="text-muted">No escorts found</h5><p class="text-muted">Try adjusting your filters or search criteria.</p></div></div>';
+            }
+
+            return response()->json([
+                'success' => true,
+                'html' => $html,
+                'pagination' => view('pagination', ['paginator' => $escorts])->render(),
+            ]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+
     public function processBilling(Request $request)
     {
         try {
@@ -149,7 +262,6 @@ class HomeController extends Controller
                             'redirectURL' => route('payment.result') . '?invoiceId={InvoiceId}',
                             'redirectAutomatically' => true,
                         ],
-
                         'notificationUrl' => route('btcpay.webhook'),
                     ]);
 
@@ -258,5 +370,4 @@ class HomeController extends Controller
             return redirect()->route('payment.failed');
         }
     }
-
 }

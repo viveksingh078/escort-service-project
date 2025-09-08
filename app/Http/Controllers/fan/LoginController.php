@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
 
-    public function fanRegister()
-    {
-        return view('fan-register');
+    public function fanRegister(){
+      return view('fan-register');
     }
 
     public function processRegisterFan(Request $request)
@@ -59,9 +58,8 @@ class LoginController extends Controller
         return redirect()->route('login')->with('success', 'You have successfully registered.');
     }
 
-    public function logout()
-    {
+    public function logout(){
         Auth::guard('fan')->logout();
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 }

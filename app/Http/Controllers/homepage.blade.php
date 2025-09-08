@@ -293,101 +293,95 @@
             </div>
 
             <div class="mt-4 otherFilters">
-              <form id="filterForm">
+              <div>
                 <div class="clear d-flex flex-wrap" style="padding-top: 0px">
-                  <label><input type="checkbox" name="filters[]" value="incall" class="me-2"> Incall</label>
-                  <label><input type="checkbox" name="filters[]" value="outcall" class="me-2"> Outcall</label>
-                  <label><input type="checkbox" name="filters[]" value="on_tour" class="me-2"> On Tour</label>
-                  <label><input type="checkbox" name="filters[]" value="soon_on_tour" class="me-2"> Soon On Tour</label>
-                  <label><input type="checkbox" name="filters[]" value="available_for_couples" class="me-2"> Available for
-                    couples</label>
-                  <label><input type="checkbox" name="filters[]" value="anal" class="me-2"> Anal</label>
-                  <label><input type="checkbox" name="filters[]" value="independent" class="me-2"> Independent</label>
-                  <label><input type="checkbox" name="filters[]" value="premium_hookers" class="me-2"> Premium
-                    Hookers</label>
-                  <label><input type="checkbox" name="filters[]" value="vip_hookers" class="me-2"> VIP Hookers</label>
-                  <label><input type="checkbox" name="filters[]" value="verified" class="me-2"> 100% verified</label>
-                  <label><input type="checkbox" name="filters[]" value="only_with_video" class="me-2"> Only with
-                    Video</label>
-                  <label><input type="checkbox" name="filters[]" value="only_with_reviews" class="me-2"> Only with
-                    Reviews</label>
-                  <label><input type="checkbox" name="filters[]" value="local" class="me-2"> Local</label>
-                  <label><input type="checkbox" name="filters[]" value="window_girls" class="me-2"> Window Girls</label>
+                  <label><input type="checkbox" class="me-2" /> Incall</label>
+                  <label><input type="checkbox" class="me-2" /> Outcall</label>
+                  <label><input type="checkbox" class="me-2" /> On Tour</label>
+                  <label><input type="checkbox" class="me-2" /> Soon On Tour</label>
+                  <label><input type="checkbox" class="me-2" /> Available for couples</label>
+                  <label><input type="checkbox" class="me-2" /> Anal</label>
+                  <label><input type="checkbox" class="me-2" /> Independent</label>
+                  <label><input type="checkbox" class="me-2" /> Premium Hookers</label>
+                  <label><input type="checkbox" class="me-2" /> VIP Hookers</label>
+                  <label><input type="checkbox" class="me-2" /> 100% verified</label>
+                  <label><input type="checkbox" class="me-2" /> Only with Video</label>
+                  <label><input type="checkbox" class="me-2" /> Only with Reviews</label>
+                  <label><input type="checkbox" class="me-2" /> Local</label>
+                  <label><input type="checkbox" class="me-2" /> Window Girls</label>
                 </div>
-                <div class="row mt-4">
-                  <div class="col-md-4">
-                    <select name="country" class="form-select form-select-lg mb-3">
-                      <option value="">Countries</option>
-                      <option value="United States">United States</option>
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Germany">Germany</option>
-                      <option value="France">France</option>
-                      <option value="Italy">Italy</option>
-                      <option value="Spain">Spain</option>
-                      <option value="Netherlands">Netherlands</option>
-                      <option value="Sweden">Sweden</option>
-                      <option value="Belgium">Belgium</option>
-                      <option value="Switzerland">Switzerland</option>
-                      <option value="Austria">Austria</option>
-                      <option value="Norway">Norway</option>
-                      <option value="Denmark">Denmark</option>
-                      <option value="Finland">Finland</option>
-                      <option value="Ireland">Ireland</option>
-                      <option value="Portugal">Portugal</option>
-                      <option value="Poland">Poland</option>
-                      <option value="Czech Republic">Czech Republic</option>
-                      <option value="Hungary">Hungary</option>
-                      <option value="Greece">Greece</option>
-                      <option value="Turkey">Turkey</option>
-                      <option value="Russia">Russia</option>
-                      <option value="Ukraine">Ukraine</option>
-                      <option value="Bulgaria">Bulgaria</option>
-                      <option value="Romania">Romania</option>
-                      <option value="Serbia">Serbia</option>
-                      <option value="Croatia">Croatia</option>
-                      <option value="Slovakia">Slovakia</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4">
-                    <select name="city" class="form-select form-select-lg mb-3">
-                      <option value="">City</option>
-                      <option value="New York">New York</option>
-                      <option value="Los Angeles">Los Angeles</option>
-                      <option value="Chicago">Chicago</option>
-                      <option value="Houston">Houston</option>
-                      <option value="Miami">Miami</option>
-                      <option value="San Francisco">San Francisco</option>
-                      <option value="Boston">Boston</option>
-                      <option value="Seattle">Seattle</option>
-                      <option value="Dallas">Dallas</option>
-                      <option value="Atlanta">Atlanta</option>
-                      <option value="Washington D.C.">Washington D.C.</option>
-                      <option value="Philadelphia">Philadelphia</option>
-                      <option value="Phoenix">Phoenix</option>
-                      <option value="San Diego">San Diego</option>
-                      <option value="Las Vegas">Las Vegas</option>
-                      <option value="Orlando">Orlando</option>
-                      <option value="Denver">Denver</option>
-                      <option value="Austin">Austin</option>
-                      <option value="Portland">Portland</option>
-                      <option value="Charlotte">Charlotte</option>
-                      <option value="London">London</option>
-                      <!-- Add more cities as needed -->
-                    </select>
-                  </div>
-                  <div class="col-md-4">
-                    <select name="sort_order" class="form-select form-select-lg mb-3">
-                      <option value="">Sort Order</option>
-                      <option value="latest">Last Updated</option>
-                      <option value="nearby">Near By</option>
-                    </select>
-                  </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col-md-4">
+                  <select class="form-select form-select-lg mb-3">
+                    <option value="1" default>Countries</option>
+                    <option value="2">United States</option>
+                    <option value="3">United Kingdom</option>
+                    <option value="4">Canada</option>
+                    <option value="5">Australia</option>
+                    <option value="6">Germany</option>
+                    <option value="7">France</option>
+                    <option value="8">Italy</option>
+                    <option value="9">Spain</option>
+                    <option value="10">Netherlands</option>
+                    <option value="11">Sweden</option>
+                    <option value="12">Belgium</option>
+                    <option value="13">Switzerland</option>
+                    <option value="14">Austria</option>
+                    <option value="15">Norway</option>
+                    <option value="16">Denmark</option>
+                    <option value="17">Finland</option>
+                    <option value="18">Ireland</option>
+                    <option value="19">Portugal</option>
+                    <option value="20">Poland</option>
+                    <option value="21">Czech Republic</option>
+                    <option value="22">Hungary</option>
+                    <option value="23">Greece</option>
+                    <option value="24">Turkey</option>
+                    <option value="25">Russia</option>
+                    <option value="26">Ukraine</option>
+                    <option value="27">Bulgaria</option>
+                    <option value="28">Romania</option>
+                    <option value="29">Serbia</option>
+                    <option value="30">Croatia</option>
+                    <option value="31">Slovakia</option>
+                  </select>
                 </div>
-                <!-- Removed the Submit button -->
-              </form>
+                <div class="col-md-4">
+                  <select class="form-select form-select-lg mb-3">
+                    <option value="1" default>City</option>
+                    <option value="2">New York</option>
+                    <option value="3">Los Angeles</option>
+                    <option value="4">Chicago</option>
+                    <option value="5">Houston</option>
+                    <option value="6">Miami</option>
+                    <option value="7">San Francisco</option>
+                    <option value="8">Boston</option>
+                    <option value="9">Seattle</option>
+                    <option value="10">Dallas</option>
+                    <option value="11">Atlanta</option>
+                    <option value="12">Washington D.C.</option>
+                    <option value="13">Philadelphia</option>
+                    <option value="14">Phoenix</option>
+                    <option value="15">San Diego</option>
+                    <option value="16">Las Vegas</option>
+                    <option value="17">Orlando</option>
+                    <option value="18">Denver</option>
+                    <option value="19">Austin</option>
+                    <option value="20">Portland</option>
+                    <option value="21">Charlotte</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <select class="form-select form-select-lg mb-3">
+                    <option value="1" default>Sort Order</option>
+                    <option value="2">Last Updated</option>
+                    <option value="3">Near By</option>
+                  </select>
+                </div>
+              </div>
             </div>
+
             <div class="row mt-4">
               <h4 class="mb-3">
                 <span class="w-24 d-inline-block"><img src="images/VIP.png" class="img-fluid" alt="" /></span>
@@ -518,28 +512,14 @@
           </div>
         </div>
 
-        <!-- ================= RIGHT COLUMN ads ================= -->
-        
+        <!-- ================= RIGHT COLUMN ================= -->
         <div class="col-md-2">
           <div class="container-fluid py-3">
-
-            @if ($sidebarAds->isEmpty())
-              <p>No ads available</p>
-            @else
-              @foreach ($sidebarAds as $ad)
-                <div class="ad-item mb-3">
-                  <a href="{{ $ad->link }}" target="_blank">
-                    <img src="{{ asset('storage/' . $ad->image) }}" class="img-fluid" alt="{{ $ad->title }}">
-                  </a>
-                </div>
-              @endforeach
-            @endif
-
+            <img src="images/ads.png" class="img-fluid" alt="Advertisement" />
           </div>
         </div>
-
-
       </div>
+    </div>
   </section>
 
   <!-- Login Modal -->
@@ -605,8 +585,11 @@
       </div>
     </div>
   </div>
+  </div>
+
 
   <!-- Billing Modal -->
+
   <div class="modal fade" id="billingModal" tabindex="-1" aria-labelledby="billingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content billing-card">
@@ -712,8 +695,14 @@
 
     #billing-form input {
       color: #fff;
+
+
     }
   </style>
+
+  </div>
+  </div>
+  </div>
 
   <link rel="stylesheet" href="{{ asset('css/user-login-style.css') }}">
 
@@ -961,82 +950,7 @@
             });
         });
       }
-
-      // Auto-search filter functionality
-      let debounceTimer;
-      function applyFilters() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          $.ajax({
-            url: '{{ route("homepage.filter") }}',
-            method: 'GET',
-            data: $('#filterForm').serialize(),
-            beforeSend: function () {
-              $('#escorts-container').html(
-                '<div class="col-12"><div class="text-center py-5"><i class="fas fa-spinner fa-spin me-2"></i>Loading...</div></div>'
-              );
-            },
-            success: function (response) {
-              if (response.success) {
-                $('#escorts-container').html(response.html);
-                if (response.pagination) {
-                  $('.pagination').html(response.pagination);
-                }
-                // Reattach click event listeners to new escort cards
-                const newCards = document.querySelectorAll('.escort-card');
-                newCards.forEach(card => {
-                  card.addEventListener('click', function () {
-                    if (isBackNavigation) {
-                      isBackNavigation = false;
-                      return;
-                    }
-                    selectedEscort = {
-                      id: this.dataset.escortId,
-                      name: this.dataset.name,
-                      price: this.dataset.price,
-                      package: this.dataset.package
-                    };
-                    fetch('{{ route("check-auth") }}', {
-                      headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                      }
-                    })
-                      .then(response => response.json())
-                      .then(data => {
-                        if (!data.isAuthenticated) {
-                          $('#loginModal').modal('show');
-                        } else {
-                          document.getElementById('billing-escort-name').textContent = selectedEscort.name;
-                          document.getElementById('billing-price').textContent = selectedEscort.price;
-                          document.getElementById('billing-escort-id').value = selectedEscort.id;
-                          $('#billingModal').modal('show');
-                        }
-                      })
-                      .catch(error => console.error('Error checking auth:', error));
-                  });
-                });
-              } else {
-                $('#escorts-container').html(
-                  '<div class="col-12"><div class="text-center py-5"><h5 class="text-muted">No escorts found</h5><p class="text-muted">Try adjusting your filters or search criteria.</p></div></div>'
-                );
-              }
-            },
-            error: function (xhr, status, error) {
-              console.error('AJAX Error:', status, error);
-              $('#escorts-container').html(
-                '<div class="col-12"><div class="text-center py-5"><h5 class="text-muted">Error loading escorts</h5><p class="text-muted">Something went wrong. Please try again.</p></div></div>'
-              );
-            }
-          });
-        }, 300); // 300ms debounce delay
-      }
-
-      // Attach change event listeners to filters, country, and city
-      $('input[name="filters[]"]').on('change', applyFilters);
-      $('select[name="country"]').on('change', applyFilters);
-      $('select[name="city"]').on('change', applyFilters);
-      $('select[name="sort_order"]').on('change', applyFilters);
     });
+
   </script>
 @endsection

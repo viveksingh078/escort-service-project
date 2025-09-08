@@ -27,11 +27,11 @@
   {{-- Your Custom Toast Functions --}}
   <script src="{{ asset('dash/js/toastDemo.js') }}"></script>
 
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 
 </head>
@@ -75,8 +75,6 @@
   <script src="{{ asset('dash/js/settings.js') }}"></script>
   <script src="{{ asset('dash/js/todolist.js') }}"></script>
   <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="js/dashboard.js"></script>
   <!-- End custom js for this page-->
 </body>
 

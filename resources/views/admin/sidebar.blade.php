@@ -73,9 +73,7 @@
       </div>
     </li>
 
-
     <!-- For Membership -->
-
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#membership" aria-expanded="false" aria-controls="membership">
         <i class="typcn typcn-credit-card menu-icon"></i>
@@ -85,10 +83,10 @@
       <div class="collapse" id="membership">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.subscription.index') }}">Features </a>
+            <a class="nav-link" href="{{ route('admin.membership.features') }}">Features </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.subscription.create') }}">Add New Plan</a>
+            <a class="nav-link" href="{{ route('admin.membership') }}">Membership Plans</a>
           </li>
         </ul>
       </div>
@@ -103,27 +101,29 @@
       </a>
       <div class="collapse" id="checkout">
         <ul class="nav flex-column sub-menu">
-          <!-- Payment Gateway Overview -->
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.paymentgateway') }}">
-              <i class="fas fa-credit-card"></i>
-              <span>Payment Gateway</span>
-            </a>
+            <a class="nav-link" href="{{ route('admin.paymentGateway') }}">Payment Gateways</a>
           </li>
-
-          <!-- BTC Pay -->
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.payment.btcpay.page') }}">
-              <i class="fas fa-coins"></i>
-              <span>BTC Pay</span>
-            </a>
-          </li>
-
-
-
         </ul>
       </div>
     </li>
+
+    <!--For Ads Space-->
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#adsSpace" aria-expanded="false" aria-controls="adsSpace">
+        <i class="typcn typcn-chart-bar-outline menu-icon"></i>
+        <span class="menu-title">Ads Space</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="adsSpace">
+        <ul class="nav flex-column sub-menu">
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.ads.index') }}">All Ads</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.ads.create') }}">Add New Ad</a>
+          </li>
+        </ul>
 
 
 

@@ -18,15 +18,12 @@ use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/load-more-escorts', [HomeController::class, 'loadMoreEscorts'])->name('load-more-escorts');
-Route::get('/filter', [HomeController::class, 'filter'])->name('homepage.filter');
+
 
 // Check authentication status
 Route::get('/check-auth', function () {
@@ -68,14 +65,12 @@ Route::group(['prefix' => '/'], function () {
     Route::get('verify-user/{email}', [LoginController::class, 'VerifyUser']);
     Route::post('/resend-verification/{email}', [LoginController::class, 'resendVerification'])->name('resend.verification');
 
-
     // password reset routes
     Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
     Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
-
   });
 
   // Authentiated Middleware
@@ -283,16 +278,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/admin/escort-manage', [SettingController::class, 'escortManage'])->name('admin.escort-manage');
 
 
-    Route::get('ads', [SettingController::class, 'adsIndex'])->name('admin.ads.index');
-    Route::get('ads/create', [SettingController::class, 'adsCreate'])->name('admin.ads.create');
-    Route::post('ads', [SettingController::class, 'adsStore'])->name('admin.ads.store');
-    Route::get('ads/{ad}/edit', [SettingController::class, 'adsEdit'])->name('admin.ads.edit');
-    Route::put('ads/{ad}', [SettingController::class, 'adsUpdate'])->name('admin.ads.update');
-    Route::delete('ads/{ad}', [SettingController::class, 'adsDestroy'])->name('admin.ads.destroy');
-    Route::get('ads/list', [SettingController::class, 'adsList'])->name('admin.ads.list');
-    Route::get('ads/list', [SettingController::class, 'adsList'])->name('admin.ads.list');
-    Route::get('ads/{ad}', [SettingController::class, 'adsShow'])->name('admin.ads.show');
-
 
     // // admin Payment Gateway BtcPay
     // Route::get('payment-gateway-btcpay', [AdminDashboardController::class, 'paymentGatewayBtcpay'])->name('admin.paymentGatewayBtcpay');
@@ -317,10 +302,6 @@ Route::group(['prefix' => 'admin'], function () {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
 
 
 
