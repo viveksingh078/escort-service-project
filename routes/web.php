@@ -1,32 +1,32 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\FaqController;
+use App\Http\Controllers\admin\AdsController;
+use App\Http\Controllers\admin\PaymentGatewayController;
 use App\Http\Controllers\fan\DashboardController as FanDashboardController;
 use App\Http\Controllers\fan\LoginController as FanLoginController;
 use App\Http\Controllers\escort\DashboardController as EscortDashboardController;
 use App\Http\Controllers\escort\LoginController as EscortLoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\LoginController;
-// use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CommonController;
+use App\Http\Controllers\SupportController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\PaymentGatewayController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-
-
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/load-more-escorts', [HomeController::class, 'loadMoreEscorts'])->name('load-more-escorts');
-Route::get('/filter', [HomeController::class, 'filter'])->name('homepage.filter');
+
 
 // Check authentication status
 Route::get('/check-auth', function () {
@@ -68,13 +68,25 @@ Route::group(['prefix' => '/'], function () {
     Route::get('verify-user/{email}', [LoginController::class, 'VerifyUser']);
     Route::post('/resend-verification/{email}', [LoginController::class, 'resendVerification'])->name('resend.verification');
 
-
     // password reset routes
     Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
     Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+    // Support
+    Route::get('support', [SupportController::class, 'index'])->name('support');
+    Route::post('support/submit', [SupportController::class, 'submit'])->name('support.submit');
+    Route::get('support/ticket/create', [SupportController::class, 'create'])->name('support.ticket.create');
+    Route::get('support/report', [SupportController::class, 'report'])->name('support.report');
+    Route::get('faqs/search', [SupportController::class, 'searchFaq'])->name('faqs.search');
+
+    // hjsb
+
+    // Terms & privecy Policy
+    Route::view('/terms', 'legal.terms')->name('terms');
+    Route::view('/privacy', 'legal.privacy')->name('privacy');
 
   });
 
@@ -183,23 +195,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('settings', [AdminDashboardController::class, 'settings'])->name('admin.settings');
     Route::post('settings-store', [SettingController::class, 'store'])->name('settings.store');
 
-    Route::get('cities', [AdminDashboardController::class, 'cities'])->name('admin.cities');
-    Route::post('add-cities', [SettingController::class, 'citiesStore'])->name('admin.cities.store');
-    Route::get('cities-list', [SettingController::class, 'citiesList'])->name('admin.cities.list');
-    Route::get('edit-cities/{id}', [SettingController::class, 'citiesEdit']);
-    Route::put('update-cities/{id}', [SettingController::class, 'citiesUpdate']);
-    Route::delete('delete-cities/{id}', [SettingController::class, 'citiesDestroy']);
-
-
-    Route::get('states', [AdminDashboardController::class, 'states'])->name('admin.states');
-    Route::post('add-states', [SettingController::class, 'statesStore'])->name('admin.states.store');
-    Route::get('states-list', [SettingController::class, 'statesList'])->name('admin.states.list');
-    Route::get('edit-states/{id}', [SettingController::class, 'statesEdit']);
-    Route::put('update-states/{id}', [SettingController::class, 'statesUpdate']);
-    Route::delete('delete-states/{id}', [SettingController::class, 'statesDestroy']);
-
-    Route::get('countries', [AdminDashboardController::class, 'countries'])->name('admin.countries');
-
 
     // admin Escort Routes
     Route::get('escort-category', [AdminDashboardController::class, 'escortCategory'])->name('admin.escort.category.create');
@@ -250,48 +245,65 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('payment-gateway-mode', [SettingController::class, 'paymentGatewayMode'])->name('admin.paymentGateway.mode');
 
     // admin  Escort Management Routes
-    Route::get('/escorts', [SettingController::class, 'escortManage'])->name('admin.escorts.index');
-    // Route::post('/escorts', [SettingController::class, 'storeEscort'])->name('admin.escorts.store');
-    Route::delete('/escorts/{id}', [SettingController::class, 'deleteEscort'])->name('admin.escorts.destroy');
-    Route::get('/escorts/{id}/view', [SettingController::class, 'viewEscort'])->name('admin.escorts.view');
-    Route::get('/escorts/{id}/edit', [SettingController::class, 'editEscort'])->name('admin.escorts.edit');
-    Route::put('/escorts/{id}', [SettingController::class, 'updateEscort'])->name('admin.escorts.update');
+    Route::get('escorts', [SettingController::class, 'escortManage'])->name('admin.escorts.index');
+    // Route::post('escorts', [SettingController::class, 'storeEscort'])->name('admin.escorts.store');
+    Route::delete('escorts/{id}', [SettingController::class, 'deleteEscort'])->name('admin.escorts.destroy');
+    Route::get('escorts/{id}/view', [SettingController::class, 'viewEscort'])->name('admin.escorts.view');
+    Route::get('escorts/{id}/edit', [SettingController::class, 'editEscort'])->name('admin.escorts.edit');
+    Route::put('escorts/{id}', [SettingController::class, 'updateEscort'])->name('admin.escorts.update');
 
     // Escort Manage View Route
-    Route::get('/escort-manage', [SettingController::class, 'escortManageView'])->name('admin.escort.manage');
+    Route::get('escort-manage', [SettingController::class, 'escortManageView'])->name('admin.escort.manage');
 
 
     // Update to use /admin/escort instead of /add-escort
-    Route::get('/escort', [SettingController::class, 'showAddEscort'])->name('admin.escort');
-    Route::post('/escort/store', [SettingController::class, 'storeEscort'])->name('admin.escort.store');
+    Route::get('escort', [SettingController::class, 'showAddEscort'])->name('admin.escort');
+    Route::post('escort/store', [SettingController::class, 'storeEscort'])->name('admin.escort.store');
     ;
-    Route::get('/escort/create', [SettingController::class, 'showAddEscort'])->name('admin.escort.create');
+    Route::get('escort/create', [SettingController::class, 'showAddEscort'])->name('admin.escort.create');
 
     // Fan Management Routes
-    Route::get('/fans', [SettingController::class, 'fanManage'])->name('admin.fans.index');
-    Route::post('/fans', [SettingController::class, 'storeFan'])->name('admin.fans.store');
-    Route::delete('/fans/{id}', [SettingController::class, 'deleteFan'])->name('admin.fans.destroy');
-    Route::get('/fans/{id}/view', [SettingController::class, 'viewFan'])->name('admin.fans.view');
-    Route::get('/fans/{id}/edit', [SettingController::class, 'editFan'])->name('admin.fans.edit');
-    Route::put('/fans/{id}', [SettingController::class, 'updateFan'])->name('admin.fans.update');
+    Route::get('fans', [SettingController::class, 'fanManage'])->name('admin.fans.index');
+    Route::post('fans', [SettingController::class, 'storeFan'])->name('admin.fans.store');
+    Route::delete('fans/{id}', [SettingController::class, 'deleteFan'])->name('admin.fans.destroy');
+    Route::get('fans/{id}/view', [SettingController::class, 'viewFan'])->name('admin.fans.view');
+    Route::get('fans/{id}/edit', [SettingController::class, 'editFan'])->name('admin.fans.edit');
+    Route::put('fans/{id}', [SettingController::class, 'updateFan'])->name('admin.fans.update');
 
     // Fan Manage View Route
-    Route::get('/fan-manage', [SettingController::class, 'fanManageView'])->name('admin.fan.manage');
+    Route::get('fan-manage', [SettingController::class, 'fanManageView'])->name('admin.fan.manage');
 
     // ADD ESCORT ADMOIN PANEL 
-    Route::post('/admin/escort', [SettingController::class, 'storeEscort'])->name('admin.escort.store');
-    Route::get('/admin/escort-manage', [SettingController::class, 'escortManage'])->name('admin.escort-manage');
+    Route::post('admin/escort', [SettingController::class, 'storeEscort'])->name('admin.escort.store');
+    Route::get('admin/escort-manage', [SettingController::class, 'escortManage'])->name('admin.escort-manage');
+
+    // ADD fAQs ADMIN PANEL 
+    Route::get('faqs', [FaqController::class, 'faqsManage'])->name('admin.faqs');
+    Route::post('faqs/', [FaqController::class, 'faqsStore'])->name('admin.faqs.store');
+    Route::get('faqs-list', [FaqController::class, 'faqsList'])->name('admin.faqs.list');
+    Route::get('faqs/{id}/view', [FaqController::class, 'viewFaqs'])->name('admin.faqs.view');
+    Route::get('faqs/{id}/edit', [FaqController::class, 'faqsEdit'])->name('admin.faqs.edit');
+    Route::put('faqs/{id}', [FaqController::class, 'faqsUpdate'])->name('admin.faqs.update');
+    Route::delete('faqs/{id}', [FaqController::class, 'faqsDestroy'])->name('admin.faqs.delete');
 
 
-    Route::get('ads', [SettingController::class, 'adsIndex'])->name('admin.ads.index');
-    Route::get('ads/create', [SettingController::class, 'adsCreate'])->name('admin.ads.create');
-    Route::post('ads', [SettingController::class, 'adsStore'])->name('admin.ads.store');
-    Route::get('ads/{ad}/edit', [SettingController::class, 'adsEdit'])->name('admin.ads.edit');
-    Route::put('ads/{ad}', [SettingController::class, 'adsUpdate'])->name('admin.ads.update');
-    Route::delete('ads/{ad}', [SettingController::class, 'adsDestroy'])->name('admin.ads.destroy');
-    Route::get('ads/list', [SettingController::class, 'adsList'])->name('admin.ads.list');
-    Route::get('ads/list', [SettingController::class, 'adsList'])->name('admin.ads.list');
-    Route::get('ads/{ad}', [SettingController::class, 'adsShow'])->name('admin.ads.show');
+    // Admin Support Ticket Routes
+    Route::get('tickets', [SupportController::class, 'ticketsManage'])->name('admin.tickets');
+    Route::post('tickets/', [SupportController::class, 'ticketsStore'])->name('admin.tickets.store');
+    Route::get('tickets-list', [SupportController::class, 'ticketsList'])->name('admin.tickets.list');
+    Route::get('tickets/{id}/view', [SupportController::class, 'viewTicket'])->name('admin.tickets.view');
+    Route::get('tickets/{id}/edit', [SupportController::class, 'ticketsEdit'])->name('admin.tickets.edit');
+    Route::put('tickets/{id}', [SupportController::class, 'ticketsUpdate'])->name('admin.tickets.update');
+    Route::delete('tickets/{id}', [SupportController::class, 'ticketsDestroy'])->name('admin.tickets.delete');
+
+    // Admin Ads Routes
+    Route::get('ads', [AdsController::class, 'adsManage'])->name('admin.ads');
+    Route::post('ads/', [AdsController::class, 'adsStore'])->name('admin.ads.store');
+    Route::get('ads-list', [AdsController::class, 'adsList'])->name('admin.ads.list');
+    Route::get('ads/{id}/view', [AdsController::class, 'adsView'])->name('admin.ads.view');
+    Route::get('ads/{id}/edit', [AdsController::class, 'adsEdit'])->name('admin.ads.edit');
+    Route::put('ads/{id}', [AdsController::class, 'adsUpdate'])->name('admin.ads.update');
+    Route::delete('ads/{id}', [AdsController::class, 'adsDestroy'])->name('admin.ads.delete');
 
 
     // // admin Payment Gateway BtcPay
@@ -317,10 +329,6 @@ Route::group(['prefix' => 'admin'], function () {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
 
 
 

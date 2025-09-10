@@ -66,9 +66,6 @@
           </li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('admin.settings') }}">Web Settings</a>
           </li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('admin.cities') }}">Cities</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('admin.states') }}">States</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{ route('admin.countries') }}">Countries</a></li>
         </ul>
       </div>
     </li>
@@ -117,13 +114,31 @@
       </a>
       <div class="collapse" id="adsSpace">
         <ul class="nav flex-column sub-menu">
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.ads.index') }}">All Ads</a>
-          </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.ads.create') }}">Add New Ad</a>
+            <a class="nav-link" href="{{ route('admin.ads') }}">Ads</a>
           </li>
         </ul>
+      </div>
+    </li>
+
+    <!-- For Support -->
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#support" aria-expanded="false" aria-controls="support">
+        <i class="typcn typcn-headphones menu-icon"></i>
+        <span class="menu-title">Support</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="support">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.faqs') }}">Faqs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.tickets') }}">Tickets</a>
+          </li>
+        </ul>
+      </div>
+    </li>
 
 
 

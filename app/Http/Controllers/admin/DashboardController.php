@@ -54,21 +54,6 @@ class DashboardController extends Controller
     return view('admin.fan-manage');
   }
 
-  public function cities()
-  {
-    return view('admin.cities');
-  }
-
-  public function states()
-  {
-    return view('admin.states');
-  }
-
-  public function countries()
-  {
-    return view('admin.countries');
-  }
-
   public function settings()
   {
     return view('admin.settings');

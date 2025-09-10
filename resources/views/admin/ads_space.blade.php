@@ -169,8 +169,8 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         error: function (xhr, status, error) {
-                            console.log('AJAX Error: ', status, error);
-                            console.log('Response: ', xhr.responseText);
+                            console.log('AJAX Error:', status, error);
+                            console.log('Response:', xhr.responseText);
                             showDangerToast('Failed to load ads. Check console for details.');
                         }
                     },
@@ -182,8 +182,12 @@
                         { data: 'position', name: 'position' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'action', name: 'action', orderable: false, searchable: false }
-                    ]
+                    ],
+                    language: {
+                        emptyTable: "No ads found. Please add new ads."
+                    }
                 });
+
             }
 
             // Submit Add Ad Form
@@ -264,10 +268,6 @@
                 e.preventDefault();
                 let id = $('#edit_ad_id').val();
                 let formData = new FormData(this);
-                // Debug FormData
-                for (let pair of formData.entries()) {
-                    console.log(pair[0] + ': ' + pair[1]);
-                }
                 formData.append('_method', 'PUT');
                 $.ajax({
                     url: '/admin/ads/' + id,
@@ -279,12 +279,9 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        console.log(response);
                         showSuccessToast('Ad updated successfully!');
                         jQuery('#editAdsModal').modal('hide');
-                        $('#adsTable').DataTable().ajax.url('/admin/ads/list?t=' + new Date().getTime()).load(); (function () {
-                            console.log('Table reloaded with new data: ' + response.new_image);
-                        });
+                        $('#adsTable').DataTable().ajax.reload(null, false);
                     },
                     error: function (xhr) {
                         console.log('Update Error: ', xhr.responseText);

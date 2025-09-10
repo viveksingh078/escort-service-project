@@ -74,7 +74,8 @@ class LoginController extends Controller
             if ($request->ajax()) {
                 return response()->json(['success' => true]);
             }
-            return redirect()->route($guard . '.dashboard');
+            //return redirect()->route($guard . '.dashboard');
+            return redirect()->route('home');
         }
 
         if ($request->ajax()) {
