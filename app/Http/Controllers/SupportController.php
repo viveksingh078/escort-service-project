@@ -12,7 +12,6 @@ class SupportController extends Controller
     /**
      * Show support page with FAQs
      */
-
     public function index()
     {
         // Load normal FAQs (latest first)
@@ -45,7 +44,7 @@ class SupportController extends Controller
         ]);
 
         if ($request->hasFile('attachment')) {
-            $data['attachment'] = $request->file('attachment')->store('support_attachments', 'public');
+            $data['attachment'] = $request->file('attachment')->store('support-attachments', 'public');
         }
 
         // Check both guards for user_id
@@ -77,6 +76,7 @@ class SupportController extends Controller
         return redirect()->route('support')
             ->with('status', 'Your ticket has been submitted successfully and notifications have been sent.');
     }
+
     // Admin view (optional)
     public function adminIndex()
     {
@@ -130,9 +130,9 @@ class SupportController extends Controller
                 return $ticket->created_at->format('Y-m-d H:i:s');
             })
             ->addColumn('action', function ($ticket) {
-                return '<button class="btn btn-sm btn-info viwBtn" data-id="' . $ticket->id . '">View</button>
-                    <button class="btn btn-sm btn-primary editBtn" data-id="' . $ticket->id . '">Edit</button>
-                    <button class="btn btn-sm btn-danger delfaqsBtn" data-id="' . $ticket->id . '">Delete</button>';
+                return '<button class="btn btn-sm btn-warning viwBtn" data-id="' . $ticket->id . '">View</button>
+            <button class="btn btn-sm btn-primary editBtn" data-id="' . $ticket->id . '">Edit</button>
+            <button class="btn btn-sm btn-danger delfaqsBtn" data-id="' . $ticket->id . '">Delete</button>';
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -151,17 +151,32 @@ class SupportController extends Controller
         ]);
 
         if ($request->hasFile('attachment')) {
-            $data['attachment'] = $request->file('attachment')->store('support_attachments', 'public');
+            $data['attachment'] = $request->file('attachment')->store('support-attachments', 'public');
         }
 
-        SupportTicket::create($data);
+        $ticket = SupportTicket::create($data);
+
+        // Admin email fetch aur notification
+        $admin = \App\Models\User::where('role', 'admin')->first();
+        if ($admin && $admin->email) {
+            $adminEmail = $admin->email;
+            \Log::info('Admin email fetched from users table (from ticketsStore): ' . $adminEmail);
+
+            try {
+                \Notification::route('mail', $adminEmail)->notify(new \App\Notifications\TicketSubmitted($ticket));
+                \Log::info('Admin notification sent successfully (from ticketsStore)');
+            } catch (\Exception $e) {
+                \Log::error('Admin notification failed (from ticketsStore): ' . $e->getMessage());
+            }
+        }
+
         return response()->json(['success' => true, 'message' => 'Ticket created successfully']);
     }
 
-    // View ticket
+    // View ticket with replies
     public function viewTicket($id)
     {
-        $ticket = SupportTicket::findOrFail($id);
+        $ticket = SupportTicket::with('replies')->findOrFail($id);
         return response()->json($ticket);
     }
 
@@ -189,7 +204,7 @@ class SupportController extends Controller
             if ($ticket->attachment) {
                 Storage::disk('public')->delete(str_replace('storage/', '', $ticket->attachment));
             }
-            $data['attachment'] = $request->file('attachment')->store('support_attachments', 'public');
+            $data['attachment'] = $request->file('attachment')->store('support-attachments', 'public');
         }
 
         $ticket->update($data);
@@ -207,4 +222,42 @@ class SupportController extends Controller
         return response()->json(['success' => true, 'message' => 'Ticket deleted successfully']);
     }
 
+    // Reply to ticket
+    public function submitReply(Request $request, $ticketId)
+    {
+        $data = $request->validate([
+            'message' => 'required|string',
+        ]);
+
+        $ticket = SupportTicket::findOrFail($ticketId);
+        $ticket->status = 'replied'; // Update ticket status
+        $ticket->save();
+
+        $reply = $ticket->replies()->create([
+            'message' => $data['message'],
+            'admin_id' => auth()->guard('admin')->check() ? auth()->guard('admin')->id() : null,
+        ]);
+
+        // Notify user
+        \Notification::route('mail', $ticket->email)->notify(new \App\Notifications\TicketReplied($ticket, $reply));
+
+        return response()->json(['success' => true, 'message' => 'Reply sent and saved successfully']);
+    }
+
+    public function checkTicket()
+    {
+        if (!auth()->check()) { // Assuming 'app' guard for simplicity
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        $userId = auth()->id();
+        $ticket = SupportTicket::where('user_id', $userId)->latest()->first();
+
+        if ($ticket) {
+            $ticket->load('replies'); // Load replies relationship
+            return response()->json(['success' => true, 'ticket' => $ticket]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No ticket found']);
+    }
 }

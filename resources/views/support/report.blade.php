@@ -1,5 +1,4 @@
 @extends('layouts.app')
-<!-- huisdhs -->
 
 @section('title', 'Report a User or Listing')
 

@@ -296,6 +296,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('tickets/{id}', [SupportController::class, 'ticketsUpdate'])->name('admin.tickets.update');
     Route::delete('tickets/{id}', [SupportController::class, 'ticketsDestroy'])->name('admin.tickets.delete');
 
+    Route::post('/admin/tickets/{ticketId}/reply', [SupportController::class, 'submitReply'])->name('admin.tickets.reply');
+
     // Admin Ads Routes
     Route::get('ads', [AdsController::class, 'adsManage'])->name('admin.ads');
     Route::post('ads/', [AdsController::class, 'adsStore'])->name('admin.ads.store');
