@@ -16,6 +16,28 @@
             </a>
           </li>
 
+<<<<<<< HEAD
+=======
+          <!-- Escort Menu -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#album" aria-expanded="false" aria-controls="album">
+              <i class="typcn typcn-group menu-icon"></i> <!-- Icon for Escort -->
+              <span class="menu-title">Album</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="album">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('escort.photos') }}">Photos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('escort.videos') }}">Videos</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+>>>>>>> 23c30d7 (Escort project)
           <li class="nav-item">
               <a class="nav-link" href="{{ route('escort.messages') }}">
                   <i class="typcn typcn-messages menu-icon"></i>

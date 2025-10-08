@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root{
 	--primary-background:#ff6cec;
 }
@@ -51,4 +52,72 @@
 .upload-icon , .upload-photo-icon{
 	 color:var(--primary-background);
 	 font-size: 30px;
+=======
+:root {
+   --primary-background: #C2185B;
+   /* Ruby Red */
+}
+
+:root {
+   --deep-wine: #4B0E1F;
+   --ruby-red: #C2185B;
+   --elegant-fuchsia: #E91E63;
+   --soft-gold: #CBA135;
+   --silver: #BFC1C2;
+   --carbon-black: #111111;
+   --smoke-gray: #2E2E2E;
+   --pure-white: #ffffff;
+}
+
+.escort-dashboard input,
+.escort-dashboard select,
+.escort-dashboard textarea {
+   border: 1px solid var(--soft-gold);
+   /* Soft Gold */
+   border-radius: 50px;
+}
+
+.escort-dashboard .form-check .form-check-label input[type="checkbox"]+.input-helper:before {
+   border: 2px solid var(--soft-gold);
+   /* Soft Gold */
+   border-radius: 5px;
+}
+
+.escort-dashboard .form-check .form-check-label input[type="checkbox"]:checked+.input-helper:before {
+   background: var(--ruby-red) !important;
+   /* Ruby Red */
+}
+
+.escort-dashboard button {
+   background: var(--ruby-red);
+   /* Ruby Red */
+   border: 1px solid var(--ruby-red);
+   border-radius: 50px;
+   color: #FFFFFF;
+   /* Pure White */
+}
+
+.escort-dashboard button:hover {
+   background: var(--ruby-red);
+   /* Alternate Ruby Red */
+}
+
+.upload-id,
+.upload-photo {
+   min-height: 140px;
+   width: 100%;
+   border: 3px dashed var(--soft-gold);
+   /* Soft Gold */
+   border-radius: 12px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.upload-icon,
+.upload-photo-icon {
+   color: var(--ruby-red);
+   /* Ruby Red */
+   font-size: 30px;
+>>>>>>> 23c30d7 (Escort project)
 }

@@ -24,6 +24,7 @@
     20 => 'Illuminate\\Translation\\TranslationServiceProvider',
     21 => 'Illuminate\\Validation\\ValidationServiceProvider',
     22 => 'Illuminate\\View\\ViewServiceProvider',
+<<<<<<< HEAD
     23 => 'Laravel\\Pail\\PailServiceProvider',
     24 => 'Laravel\\Sail\\SailServiceProvider',
     25 => 'Laravel\\Tinker\\TinkerServiceProvider',
@@ -34,6 +35,19 @@
     30 => 'Pest\\Laravel\\PestServiceProvider',
     31 => 'Yajra\\DataTables\\DataTablesServiceProvider',
     32 => 'App\\Providers\\AppServiceProvider',
+=======
+    23 => 'Laravel\\Cashier\\CashierServiceProvider',
+    24 => 'Laravel\\Pail\\PailServiceProvider',
+    25 => 'Laravel\\Sail\\SailServiceProvider',
+    26 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    27 => 'Laravel\\Ui\\UiServiceProvider',
+    28 => 'Carbon\\Laravel\\ServiceProvider',
+    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    30 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    31 => 'Pest\\Laravel\\PestServiceProvider',
+    32 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    33 => 'App\\Providers\\AppServiceProvider',
+>>>>>>> 23c30d7 (Escort project)
   ),
   'eager' => 
   array (
@@ -47,6 +61,7 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
+<<<<<<< HEAD
     10 => 'Laravel\\Pail\\PailServiceProvider',
     11 => 'Laravel\\Ui\\UiServiceProvider',
     12 => 'Carbon\\Laravel\\ServiceProvider',
@@ -55,6 +70,17 @@
     15 => 'Pest\\Laravel\\PestServiceProvider',
     16 => 'Yajra\\DataTables\\DataTablesServiceProvider',
     17 => 'App\\Providers\\AppServiceProvider',
+=======
+    10 => 'Laravel\\Cashier\\CashierServiceProvider',
+    11 => 'Laravel\\Pail\\PailServiceProvider',
+    12 => 'Laravel\\Ui\\UiServiceProvider',
+    13 => 'Carbon\\Laravel\\ServiceProvider',
+    14 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    15 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    16 => 'Pest\\Laravel\\PestServiceProvider',
+    17 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
+>>>>>>> 23c30d7 (Escort project)
   ),
   'deferred' => 
   array (

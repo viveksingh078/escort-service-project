@@ -6,12 +6,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+<<<<<<< HEAD
+=======
+use Laravel\Cashier\Billable;
+>>>>>>> 23c30d7 (Escort project)
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
+<<<<<<< HEAD
     use HasFactory, Notifiable;
+=======
+    use HasFactory, Notifiable, Billable;
+>>>>>>> 23c30d7 (Escort project)
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +31,12 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+<<<<<<< HEAD
         'last_seen'
+=======
+        'last_seen',
+        'username'
+>>>>>>> 23c30d7 (Escort project)
     ];
 
     /**
@@ -102,5 +115,13 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class);
     }
 
+<<<<<<< HEAD
+=======
+    public function categories()
+    {
+        return $this->belongsToMany(EscortCategory::class, 'escort_category_user', 'user_id', 'escort_category_id');
+    }
+
+>>>>>>> 23c30d7 (Escort project)
 
 }

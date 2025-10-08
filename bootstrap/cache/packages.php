@@ -1,4 +1,14 @@
 <?php return array (
+<<<<<<< HEAD
+=======
+  'laravel/cashier' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Cashier\\CashierServiceProvider',
+    ),
+  ),
+>>>>>>> 23c30d7 (Escort project)
   'laravel/pail' => 
   array (
     'providers' => 

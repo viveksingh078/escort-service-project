@@ -4,14 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+<<<<<<< HEAD
     <title>{{ config('app.name', 'Laravel') }}</title>
+=======
+    <title>@yield('title', 'Escort')</title>
+
+    <link rel="stylesheet" href="{{ asset('dash/vendors/typicons/typicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('dash/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="{{ asset('dash/css/vertical-layout-light/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/file-uploader-single.css') }}">
+>>>>>>> 23c30d7 (Escort project)
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Vite Assets (Laravel 9+) -->
+<<<<<<< HEAD
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+=======
+   @vite(['resources/sass/app.scss', 'resources/js/app.js']) 
+>>>>>>> 23c30d7 (Escort project)
     <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/all.css') }}" />
     <!-- Owl Carousel & Custom Styles -->
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
@@ -22,6 +35,12 @@
     <script src="{{ asset('js/custum.js') }}" defer></script>
      {{-- jQuery CDN --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<<<<<<< HEAD
+=======
+      <!-- Fancybox JS & CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+>>>>>>> 23c30d7 (Escort project)
   </head>
   <body>
     <div id="app" class="bg-white">
@@ -63,7 +82,11 @@
           @else
           <div class="px-1 py-1 col-6 col-lg-1 justify-content-center align-items-center d-flex mt-2 mt-lg-0">
             <a href="{{ route('login') }}"
+<<<<<<< HEAD
               class="w-100 br-25 text-center btn btn-primary bg-main border-0 text-white fs-6 fw-normal font-family-Inter text-uppercase m-0 px-3 py-2">
+=======
+              class="w-100 br-25 text-center btn category-btn fw-semibold  bg-main border-0 text-white fs-6 fw-normal font-family-Inter text-uppercase m-0 px-3 py-2">
+>>>>>>> 23c30d7 (Escort project)
               Login
             </a>
           </div>
@@ -73,7 +96,11 @@
             >
             <div class="py-1 justify-content-center align-items-center w-100">
               <a
+<<<<<<< HEAD
                 class="btn-hover text-center btn btn-outline-dark br-25 text-black fs-6 badge-pill fw-normal font-family-Inter col-12 m-0 px-3 py-2"
+=======
+                class="btn-hover text-center btn ads1-btn fw-semibold  br-25 text-white fs-6 badge-pill fw-normal font-family-Inter col-12 m-0 px-3 py-2"
+>>>>>>> 23c30d7 (Escort project)
                 >
                 Post Your Ad
               </a>
@@ -82,7 +109,11 @@
         </div>
       </div>
       <div class="header_bottom">
+<<<<<<< HEAD
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+=======
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-0 bottom-nav">
+>>>>>>> 23c30d7 (Escort project)
           <div class="container-fluid">
             <a class="navbar-brand" href="#">
               <img
@@ -204,9 +235,30 @@
     </div>
   </footer>
 </div>
+<<<<<<< HEAD
 <!-- JS Scripts -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+=======
+
+<!-- base:js -->
+<script src="{{ asset('dash/vendors/js/vendor.bundle.base.js') }}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="{{ asset('dash/vendors/chart.js/Chart.min.js') }}"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{{ asset('dash/js/off-canvas.js') }}"></script>
+<script src="{{ asset('dash/js/hoverable-collapse.js') }}"></script>
+<script src="{{ asset('dash/js/template.js') }}"></script>
+<script src="{{ asset('dash/js/settings.js') }}"></script>
+<script src="{{ asset('dash/js/todolist.js') }}"></script>
+
+<!-- JS Scripts -->
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/file-uploader-single.js') }}"></script>
+>>>>>>> 23c30d7 (Escort project)
 <script>
 $(document).ready(function () {
 $(".owl-carousel").owlCarousel({

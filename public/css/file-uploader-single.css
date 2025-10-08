@@ -1,0 +1,44 @@
+/* Hide the native file input */
+.file-uploder {
+    position: absolute;
+    left: -9999px; /* move it off-screen */
+    visibility: hidden;
+}
+
+/* Wrapper in column layout */
+.file-uploder-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+/* Custom button */
+.file-uploder-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF; /* Pure White */
+    background-color: #C2185B; /* Ruby Red */
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin-bottom: 0px;
+}
+
+/* Hover effect */
+.file-uploder-btn:hover {
+    background-color: #E91E63; /* Alternate Ruby Red */
+}
+
+/* Filename text (below button) */
+.file-uploder-filename {
+    font-size: 13px;
+    color: #BFC1C2; /* Silver */
+    font-style: italic;
+}

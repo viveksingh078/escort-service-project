@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <link rel="stylesheet" href="{{ asset('css/escort-dashboard.css') }}">
+<<<<<<< HEAD
+=======
+  <link rel="stylesheet" href="{{ asset('css/file-uploader.css') }}">
+>>>>>>> 23c30d7 (Escort project)
 
   <link rel="stylesheet" href="{{ asset('dash/vendors/typicons/typicons.css') }}">
   <link rel="stylesheet" href="{{ asset('dash/vendors/css/vendor.bundle.base.css') }}">
@@ -25,6 +29,26 @@
     {{-- jQuery CDN --}}
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+<<<<<<< HEAD
+=======
+  {{-- Toast Plugin CSS and JS --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js"></script>
+
+  {{-- Your Custom Toast Functions --}}
+  <script src="{{ asset('dash/js/toastDemo.js') }}"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+  <!-- Fancybox JS & CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+>>>>>>> 23c30d7 (Escort project)
   <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.min.js"></script>
 </head>
 <body>
@@ -122,6 +146,10 @@
   <script src="{{ asset('dash/js/template.js') }}"></script>
   <script src="{{ asset('dash/js/settings.js') }}"></script>
   <script src="{{ asset('dash/js/todolist.js') }}"></script>
+<<<<<<< HEAD
+=======
+  <script src="{{ asset('js/file-uploader.js') }}"></script>
+>>>>>>> 23c30d7 (Escort project)
   <!-- endinject -->
   <!-- End custom js for this page-->
 </body>

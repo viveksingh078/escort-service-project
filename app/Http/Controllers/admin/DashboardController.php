@@ -5,6 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Features;
+<<<<<<< HEAD
+=======
+use App\Models\EscortCategory;
+>>>>>>> 23c30d7 (Escort project)
 
 class DashboardController extends Controller
 {
@@ -30,6 +34,7 @@ class DashboardController extends Controller
 
   public function escortCreate()
   {
+<<<<<<< HEAD
     return view('admin.escort');
   }
 
@@ -37,6 +42,16 @@ class DashboardController extends Controller
   {
     \Log::info('Rendering admin.escort-manage view');
     return view('admin.escort-manage');
+=======
+    $categories = EscortCategory::all(); // Fetch all categories
+    return view('admin.escort', compact('categories')); // Pass to view
+  }
+
+  public function escortManage()
+  {
+    $categories = EscortCategory::all();
+    return view('admin.escort-manage', compact('categories'));
+>>>>>>> 23c30d7 (Escort project)
   }
 
   public function fanCategory()
@@ -80,5 +95,12 @@ class DashboardController extends Controller
     return view('admin.payment-gateway-btcpay');
   }
 
+<<<<<<< HEAD
+=======
+  public function createCountry()
+  {
+    return view('admin.create-country');
+  }
+>>>>>>> 23c30d7 (Escort project)
 
 }

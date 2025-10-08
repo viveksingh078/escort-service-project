@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+=======
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+>>>>>>> 23c30d7 (Escort project)
 
 /* Register page css  */
 
@@ -8,7 +12,11 @@
 --black-color: #000;
 --white-color: #fff;
 --color-1d1d1d: #1d1d1d;
+<<<<<<< HEAD
 --primary-font:"Nunito", sans-serif;
+=======
+--primary-font:"Outfit", sans-serif;
+>>>>>>> 23c30d7 (Escort project)
 }
 
 body{
@@ -16,7 +24,12 @@ body{
 }
 
 .register-page{
+<<<<<<< HEAD
   background: linear-gradient(135deg, #ba2171 0%, rgba(157, 0, 255, 0.4) 50%, #ba2171 100%);
+=======
+  background: #8c0846;
+  background: radial-gradient(circle, rgba(140, 8, 70, 1) 0%, rgba(0, 0, 0, 1) 100%);
+>>>>>>> 23c30d7 (Escort project)
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -72,7 +85,12 @@ body{
 
 
 .fan-register-page{
+<<<<<<< HEAD
   background: linear-gradient(135deg, #ba2171 0%, rgba(157, 0, 255, 0.4) 50%, #ba2171 100%);
+=======
+  background: #8c0846;
+  background: radial-gradient(circle, rgba(140, 8, 70, 1) 0%, rgba(0, 0, 0, 1) 100%);
+>>>>>>> 23c30d7 (Escort project)
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -169,7 +187,12 @@ body{
 
 
 .escort-register-page{
+<<<<<<< HEAD
   background: linear-gradient(135deg, #ba2171 0%, rgba(157, 0, 255, 0.4) 50%, #ba2171 100%);
+=======
+  background: #8c0846;
+  background: radial-gradient(circle, rgba(140, 8, 70, 1) 0%, rgba(0, 0, 0, 1) 100%);
+>>>>>>> 23c30d7 (Escort project)
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -233,3 +256,11 @@ body{
   margin-top: 0;
 }
 
+<<<<<<< HEAD
+=======
+/*
+-------------------------------------------------------------------------------
+   Change file uploader design
+-------------------------------------------------------------------------------
+*/
+>>>>>>> 23c30d7 (Escort project)

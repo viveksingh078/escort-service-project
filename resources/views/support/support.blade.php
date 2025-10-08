@@ -15,10 +15,15 @@
           ticket below.</p>
       </div>
       <div class="col-md-4 text-md-end align-self-center">
+<<<<<<< HEAD
         <a href="" class="btn btn-outline-primary mb-2">View Ticket</a>
         <a href="mailto:support@rubysirens.com" class="btn btn-outline-primary mb-2">Email Support</a>
         <a href="{{ route('support.ticket.create') }}" class="btn btn-outline-primary mb-2">Submit Ticket</a>
 
+=======
+        <a href="mailto:support@rubysirens.com" class="btn btn-outline-primary mb-2">Email Support</a>
+        <a href="{{ route('support.ticket.create') }}" class="btn btn-primary mb-2">Submit Ticket</a>
+>>>>>>> 23c30d7 (Escort project)
       </div>
     </div>
     <div class="row gy-4">
@@ -174,11 +179,19 @@
             } else {
               $.each(data, function (i, faq) {
                 $('#faq-results').append(`
+<<<<<<< HEAD
                                                   <div class="list-group-item">
                                                       <strong>${faq.question}</strong>
                                                       <div class="small text-muted">${faq.answer}</div>
                                                   </div>
                                               `);
+=======
+                                            <div class="list-group-item">
+                                                <strong>${faq.question}</strong>
+                                                <div class="small text-muted">${faq.answer}</div>
+                                            </div>
+                                        `);
+>>>>>>> 23c30d7 (Escort project)
               });
             }
           },

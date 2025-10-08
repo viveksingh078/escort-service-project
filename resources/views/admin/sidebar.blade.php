@@ -70,7 +70,31 @@
       </div>
     </li>
 
+<<<<<<< HEAD
     <!-- For Membership -->
+=======
+    <!-- for Countries Flag -->
+
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#countriesFlag" aria-expanded="false"
+        aria-controls="countriesFlag">
+        <i class="typcn typcn-world menu-icon"></i> <!-- Icon for Countries Flag -->
+        <span class="menu-title">Countries Flag</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="countriesFlag">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.countries.create') }}">Add Country</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.countries.manage') }}">Manage Countries</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- For Membership -->
+>>>>>>> 23c30d7 (Escort project)
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#membership" aria-expanded="false" aria-controls="membership">
         <i class="typcn typcn-credit-card menu-icon"></i>

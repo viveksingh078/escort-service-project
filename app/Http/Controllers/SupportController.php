@@ -222,7 +222,11 @@ class SupportController extends Controller
         return response()->json(['success' => true, 'message' => 'Ticket deleted successfully']);
     }
 
+<<<<<<< HEAD
     // Reply to ticket
+=======
+    // Submit reply to ticket
+>>>>>>> 23c30d7 (Escort project)
     public function submitReply(Request $request, $ticketId)
     {
         $data = $request->validate([
@@ -230,20 +234,42 @@ class SupportController extends Controller
         ]);
 
         $ticket = SupportTicket::findOrFail($ticketId);
+<<<<<<< HEAD
         $ticket->status = 'replied'; // Update ticket status
         $ticket->save();
 
+=======
+
+        // ✅ Use constant instead of hardcoded string
+        $ticket->status = SupportTicket::STATUS_REPLIED;
+        $ticket->save();
+
+        // Create the reply linked to the ticket
+>>>>>>> 23c30d7 (Escort project)
         $reply = $ticket->replies()->create([
             'message' => $data['message'],
             'admin_id' => auth()->guard('admin')->check() ? auth()->guard('admin')->id() : null,
         ]);
 
+<<<<<<< HEAD
         // Notify user
         \Notification::route('mail', $ticket->email)->notify(new \App\Notifications\TicketReplied($ticket, $reply));
 
         return response()->json(['success' => true, 'message' => 'Reply sent and saved successfully']);
     }
 
+=======
+        // Notify the user (escort or fan) via email
+        \Notification::route('mail', $ticket->email)->notify(new \App\Notifications\TicketReplied($ticket, $reply));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Reply sent and saved successfully'
+        ]);
+    }
+
+
+>>>>>>> 23c30d7 (Escort project)
     public function checkTicket()
     {
         if (!auth()->check()) { // Assuming 'app' guard for simplicity

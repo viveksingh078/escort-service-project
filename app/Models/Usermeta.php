@@ -9,6 +9,10 @@ class Usermeta extends Model
     protected $table = 'usermeta';
     protected $primaryKey = 'umeta_id';
     public $timestamps = false;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23c30d7 (Escort project)
     public $incrementing = true;
     protected $keyType = 'int';
 

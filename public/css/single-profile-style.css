@@ -1,0 +1,56 @@
+.single-profile-page {
+    background: #111111; /* Carbon Black */
+}
+
+.profile-card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0px !important;
+}
+
+.profile-card .card-body {
+    background: #2E2E2E; /* Smoke Gray */
+}
+
+.profile-card .card-body h5, .profile-card .card-body p {
+    color: #BFC1C2; /* Silver */
+}
+
+.profile-card .card-body .social-links {
+    display: flex;
+}
+
+.profile-card .card-body .social-link {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    background: #BFC1C2; /* Silver */
+    margin-right: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-card .card-body .social-link:hover {
+    background: #CBA135; /* Soft Gold */
+}
+
+.profile-card .card-body .social-link:hover .pro-social-icon {
+    font-size: 20px;
+    color: #FFFFFF; /* Pure White */
+}
+
+.profile-card .card-body .pro-social-icon {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.profile-card-right .card-title {
+    color: #BFC1C2; /* Silver */
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+}

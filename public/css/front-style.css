@@ -5,7 +5,11 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/fontfamily/Roboto-Black.woff2') format('woff2'),
+<<<<<<< HEAD
          url('/fonts/fontfamily/Roboto-Black.woff') format('woff');
+=======
+        url('/fonts/fontfamily/Roboto-Black.woff') format('woff');
+>>>>>>> 23c30d7 (Escort project)
     font-weight: 900;
     font-style: normal;
     font-display: swap;
@@ -23,7 +27,11 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/fontfamily/Roboto-Bold.woff2') format('woff2'),
+<<<<<<< HEAD
          url('/fonts/fontfamily/Roboto-Bold.woff') format('woff');
+=======
+        url('/fonts/fontfamily/Roboto-Bold.woff') format('woff');
+>>>>>>> 23c30d7 (Escort project)
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -50,7 +58,11 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/fontfamily/Roboto-Light.woff2') format('woff2'),
+<<<<<<< HEAD
          url('/fonts/fontfamily/Roboto-Light.woff') format('woff');
+=======
+        url('/fonts/fontfamily/Roboto-Light.woff') format('woff');
+>>>>>>> 23c30d7 (Escort project)
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -68,7 +80,11 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/fontfamily/Roboto-Medium.woff2') format('woff2'),
+<<<<<<< HEAD
          url('/fonts/fontfamily/Roboto-Medium.woff') format('woff');
+=======
+        url('/fonts/fontfamily/Roboto-Medium.woff') format('woff');
+>>>>>>> 23c30d7 (Escort project)
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -86,7 +102,11 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/fontfamily/Roboto-Regular.woff2') format('woff2'),
+<<<<<<< HEAD
          url('/fonts/fontfamily/Roboto-Regular.woff') format('woff');
+=======
+        url('/fonts/fontfamily/Roboto-Regular.woff') format('woff');
+>>>>>>> 23c30d7 (Escort project)
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -95,7 +115,11 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/fontfamily/Roboto-Thin.woff2') format('woff2'),
+<<<<<<< HEAD
          url('/fonts/fontfamily/Roboto-Thin.woff') format('woff');
+=======
+        url('/fonts/fontfamily/Roboto-Thin.woff') format('woff');
+>>>>>>> 23c30d7 (Escort project)
     font-weight: 100;
     font-style: normal;
     font-display: swap;
@@ -114,6 +138,7 @@
 
 /* font family  */
 
+<<<<<<< HEAD
 
 
 /*common css  */
@@ -168,10 +193,88 @@ img{
 }
 
 .f-12{
+=======
+:root {
+    --deep-wine: #4B0E1F;
+    --ruby-red: #C2185B;
+    --elegant-fuchsia: #E91E63;
+    --soft-gold: #CBA135;
+    --silver: #BFC1C2;
+    --carbon-black: #111111;
+    --smoke-gray: #2E2E2E;
+    --pure-white: #ffffff;
+}
+
+/*common css  */
+
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1rem;
+    font-family: 'Roboto';
+}
+
+select {
+    font-family: 'Roboto' !important;
+}
+
+option {
+    font-family: 'Roboto' !important;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h5,
+h6,
+ul,
+p,
+ul {
+    margin: 0;
+}
+
+h1 {
+    font-family: "Holtwood One SC", serif;
+}
+
+ul {
+    list-style: none;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    width: 100%;
+}
+
+.f-18 {
+    font-size: 18px;
+}
+
+.f-12 {
+>>>>>>> 23c30d7 (Escort project)
     font-size: 12px;
 }
 
 
+<<<<<<< HEAD
 .fs-14{
     font-size: 14px!important;
 }
@@ -219,17 +322,79 @@ img{
 .tags span{
 max-width: 32px;
 display: inline-block;
+=======
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.f-26 {
+    font-size: 26px;
+}
+
+.f-10 {
+    font-size: 10px;
+}
+
+.w-24 {
+    width: 24px !important;
+    object-fit: cover;
+}
+
+.br-15 {
+    border-radius: 15px;
+}
+
+.br-25 {
+    border-radius: 25px !important;
+}
+
+.h-45 {
+    height: 45px;
+}
+
+.border-light {
+    border-color: rgba(224, 232, 242, 0.6) !important;
+}
+
+:root {
+    --main-color: #E91E63;
+    --purple-color: #282041;
+    --btn-color: #9b3b2b;
+    --bg-black: #000;
+    --pane-padding: 5px 42px;
+    --blue-light: #F0F9FF;
+    --bg-orange: #EE5729;
+    --grey: #828282;
+    --light-main: #F7CC5C;
+    --light-red: #E8555A;
+
+
+    --icon-color: #CBA135;
+
+}
+
+
+.tags span {
+    max-width: 32px;
+    display: inline-block;
+>>>>>>> 23c30d7 (Escort project)
 }
 
 
 .tags {
+<<<<<<< HEAD
     position:absolute;
     top:15px;
+=======
+    position: absolute;
+    top: 15px;
+>>>>>>> 23c30d7 (Escort project)
     display: flex;
     flex-direction: column;
     left: 5px;
 }
 
+<<<<<<< HEAD
 .tags .tag-1{
 z-index: 1;
 }
@@ -280,22 +445,90 @@ main{
 }
 .zindex-99{
     z-index: 99!important;
+=======
+.tags .tag-1 {
+    z-index: 1;
+}
+
+.tags .tag-2 {
+    top: -10px;
+    z-index: 2;
+}
+
+.tags .tag-3 {
+    top: -20px;
+    z-index: 3;
+}
+
+main {
+    background-color: #f6f6f6
+}
+
+.bg-grey {
+    background-color: var(--grey);
+}
+
+.bg-main-light {
+    background-color: var(--main-color);
+}
+
+.bg-light-red {
+    background-color: var(--light-red);
+}
+
+.text-main {
+    color: var(--icon-color);
+}
+
+.bg-main {
+    background-color: var(--main-color);
+}
+
+.text-grey {
+    color: var(--grey);
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.zindex-99 {
+    z-index: 99 !important;
+>>>>>>> 23c30d7 (Escort project)
 }
 
 .otherFilters label {
     font-size: 13px;
     letter-spacing: .01em;
     text-transform: uppercase;
+<<<<<<< HEAD
     color: #1f1f1f;
     border: 1px solid #d1cfcf;
     border-radius: 18px;
     -webkit-border-radius: 18px;
+=======
+    color: #ced4da;
+    /* Carbon Black */
+    border: 1px solid #CBA135;
+    /* Soft Gold */
+    border-radius: 18px;
+>>>>>>> 23c30d7 (Escort project)
     padding-left: 14px;
     padding-right: 16px;
     display: block;
     position: relative;
+<<<<<<< HEAD
     background-color: #fff;
     min-width: 50px;   
+=======
+    background-color: #2E2E2E;
+    /* Smoke Gray */
+    min-width: 50px;
+>>>>>>> 23c30d7 (Escort project)
     line-height: 32px;
     cursor: pointer;
     margin-right: 5px;
@@ -303,13 +536,25 @@ main{
 }
 
 @media (min-width: 1200px) {
+<<<<<<< HEAD
   .container, .container-lg, .container-md, .container-sm, .container-xl {
     max-width: 1200px;
   }
+=======
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1200px;
+    }
+>>>>>>> 23c30d7 (Escort project)
 }
 
 
 .onOverlay {
+<<<<<<< HEAD
   opacity: 0;
   transition: opacity 1s ease;
   background: rgba(5, 5, 5, 0.74);
@@ -339,12 +584,48 @@ top:5px
 }
 
 .image_container img{
+=======
+    opacity: 0;
+    transition: opacity 1s ease;
+    background: rgba(5, 5, 5, 0.74);
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+}
+
+.card:hover .onOverlay {
+    opacity: 1;
+}
+
+.search_top_center {
+    top: 5px
+}
+
+.page-link {
+    color: #000
+}
+
+.pagination .active .page-link {
+    background-color: var(--main-color) !important;
+    border: none
+}
+
+.image_container {
+    height: 250px;
+}
+
+.image_container img {
+>>>>>>> 23c30d7 (Escort project)
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+<<<<<<< HEAD
 header{
+=======
+header {
+>>>>>>> 23c30d7 (Escort project)
     display: flex;
     flex-direction: column;
 }
@@ -355,11 +636,19 @@ header{
 }
 
 
+<<<<<<< HEAD
 .btn-check:focus + .btn, .btn:focus, .form-select:focus, .form-control:focus {
+=======
+.btn-check:focus+.btn,
+.btn:focus,
+.form-select:focus,
+.form-control:focus {
+>>>>>>> 23c30d7 (Escort project)
     box-shadow: none;
 }
 
 @media screen and (max-width: 768px) {
+<<<<<<< HEAD
 header{
     display: flex;
     flex-direction: column-reverse;
@@ -380,4 +669,143 @@ color: #fff !important;
 
 .btn-hover{
     border:1px solid #ced4da
+=======
+    header {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .navbar-toggler:active:focus {
+        border: none;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .image_container {
+        height: 350px;
+    }
+}
+
+.btn-hover:hover {
+    color: #fff !important;
+}
+
+.btn-hover {
+    border: 1px solid #ced4da
+}
+
+
+/*
+------------------------------------------------------------------------------------
+  Escort Single Profile Page
+------------------------------------------------------------------------------------
+*/
+
+.profile-box {
+    height: 250px;
+    width: 250px;
+}
+
+.profile-box img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.overlay-link {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+/*
+------------------------------------------------------------------------------------
+ Homepage 
+------------------------------------------------------------------------------------
+*/
+
+
+/* Card Style */
+.billing-card {
+    background: #1c1c1c;
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    padding: 15px;
+}
+
+/* Inputs */
+.custom-input {
+    background: #2b2b2b;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: #ff007f;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+    outline: none;
+    background: #222;
+}
+
+.custom-input::placeholder {
+    color: #aaa;
+}
+
+/* Button */
+.btn-pink {
+    background: linear-gradient(135deg, #ff007f, #ff4081);
+    border: none;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.btn-pink:hover {
+    background: linear-gradient(135deg, #ff4081, #ff007f);
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.8);
+    transform: translateY(-2px);
+}
+
+/* Text color helper */
+.text-pink {
+    color: #ff4081;
+}
+
+#billing-form input {
+    color: #fff;
+
+
+}
+
+.bottom-nav {
+    background: var(--smoke-gray) !important;
+}
+
+
+
+
+.ads1-btn {
+    background-color: var(--ruby-red);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.ads1-btn:hover {
+    background-color: var(--ruby-red);
+>>>>>>> 23c30d7 (Escort project)
 }

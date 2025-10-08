@@ -1,0 +1,110 @@
+/* Hide default input */
+.file-uploader {
+    display: none !important;
+}
+
+/* Custom upload button */
+.custom-file-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #C2185B; /* Ruby Red */
+    color: #FFFFFF; /* Pure White */
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    transition: background 0.3s;
+}
+
+.custom-file-btn:hover {
+    background: #E91E63; /* Alternate Ruby Red */
+}
+
+/* Preview grid */
+.preview-list {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Each preview item */
+.preview-item {
+    position: relative;
+    width: 100px;
+    text-align: center;
+    font-size: 12px;
+    color: #BFC1C2; /* Silver */
+}
+
+/* Thumbnail or icon */
+.preview-item img, .preview-item i {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 5px;
+    border-radius: 8px;
+    border: 1px solid #CBA135; /* Soft Gold */
+}
+
+/* Remove button */
+.remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #4B0E1F; /* Burgundy */
+    color: #FFFFFF; /* Pure White */
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-card {
+    height: 165px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid #CBA135; /* Soft Gold */
+}
+
+.image-card img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+.image-card-body {
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+    width: 100%;
+}
+
+.image-card-text {
+    font-size: 12px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    display: none;
+}
+
+.image-card-body .removeBtn {
+    border-radius: 50px;
+    background: #4B0E1F; /* Burgundy */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.file-upload-modal-body {
+    border: 1px solid #CBA135; /* Soft Gold */
+}

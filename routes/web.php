@@ -1,5 +1,9 @@
 <?php
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23c30d7 (Escort project)
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +18,11 @@ use App\Http\Controllers\fan\DashboardController as FanDashboardController;
 use App\Http\Controllers\fan\LoginController as FanLoginController;
 use App\Http\Controllers\escort\DashboardController as EscortDashboardController;
 use App\Http\Controllers\escort\LoginController as EscortLoginController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\escort\PhotosController;
+use App\Http\Controllers\escort\VideosController;
+>>>>>>> 23c30d7 (Escort project)
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\LoginController;
@@ -23,16 +32,35 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\LocationController;
+>>>>>>> 23c30d7 (Escort project)
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/load-more-escorts', [HomeController::class, 'loadMoreEscorts'])->name('load-more-escorts');
 
 
+<<<<<<< HEAD
+=======
+// Load escorts by category - AJAX
+Route::get('/load-escorts-by-category', [HomeController::class, 'loadEscortsByCategory'])->name('load.escorts.by.category');
+
+// routes for filtering escorts by location
+Route::get('/filter-escorts', [HomeController::class, 'filterEscorts'])->name('filter.escorts');
+
+// categories page show 
+Route::get('/category/{id}', [HomeController::class, 'showCategory'])->name('category.show');
+
+Route::get('/country/{id}', [HomeController::class, 'showCountry'])->name('country.show');
+
+>>>>>>> 23c30d7 (Escort project)
 // Check authentication status
 Route::get('/check-auth', function () {
   return response()->json(['isAuthenticated' => Auth::guard('fan')->check()]);
 })->name('check-auth');
 
+<<<<<<< HEAD
 // Billing process
 Route::post('/billing', [HomeController::class, 'processBilling'])->name('billing')->middleware('fan.auth');
 
@@ -48,6 +76,60 @@ Route::get('/payment-failed', function () {
   return view('payment-failed');
 })->name('payment.failed');
 Route::get('/payment-result', [HomeController::class, 'paymentResult'])->name('payment.result');
+=======
+Route::post('/create-invoice', [HomeController::class, 'createInvoice'])->name('create.invoice');
+
+// Billing process
+Route::post('/billing', [HomeController::class, 'processBilling'])->name('billing')->middleware('fan.auth');
+
+Route::get('/payment-success/{invoice_id?}', [HomeController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment-failed/{escort_id?}', [HomeController::class, 'paymentFailed'])->name('payment.failed');
+
+// Choose subscription plan before billing
+Route::get('/choose-plan/{escort_id}', [HomeController::class, 'choosePlan'])
+  ->where('escort_id', '[0-9]+')
+  ->name('choose.plan')
+  ->middleware('fan.auth');
+
+// Payment page for BTCPay
+Route::get('/payment/{invoice_id}', [HomeController::class, 'showPaymentPage'])->name('payment.page');
+
+// Webhook for BTCPay confirmation (CSRF exempt)
+Route::post('/btcpay-webhook', [HomeController::class, 'handleWebhook'])->name('btcpay.webhook')->withoutMiddleware(['web']);
+
+// payment result
+Route::get('/payment-success/{invoice_id?}', [HomeController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment-failed/{escort_id?}', [HomeController::class, 'paymentFailed'])->name('payment.failed');
+Route::get('/payment-result', [HomeController::class, 'paymentResult'])->name('payment.result');
+Route::get('/check-payment-status', [HomeController::class, 'checkPaymentStatus'])->name('check.payment.status');
+Route::get('/payment-status-page', function() { return view('payment-status-check'); })->name('payment.status.page');
+Route::get('/payment-complete', function() { return view('payment-complete'); })->name('payment.complete');
+Route::get('/payment-instructions', function() { return view('payment-instructions'); })->name('payment.instructions');
+Route::get('/payment-processing', function() { return view('payment-processing'); })->name('payment.processing');
+Route::get('/btcpay-redirect', function() { return view('btcpay-redirect'); })->name('btcpay.redirect');
+
+// Manual payment sync route
+Route::get('/sync-payments', [HomeController::class, 'syncPayments'])->name('sync.payments');
+
+// Debug billing route
+Route::get('/debug-billing', [HomeController::class, 'debugBilling'])->name('debug.billing')->middleware('fan.auth');
+
+// Subscription downgrade route
+Route::post('/subscription/downgrade', [HomeController::class, 'downgradeSubscription'])->name('subscription.downgrade')->middleware('fan.auth');
+
+// Escort profile listing
+Route::get('listing/escort-{id}', [CommonController::class, 'listingEscortProfile'])
+  ->where('id', '[0-9]+')
+  ->name('listing.profile');
+
+
+
+
+Route::get('get-countries', [LocationController::class, 'getCountries'])->name('get.countries');
+Route::get('get-states/{country_id}', [LocationController::class, 'getStates'])->name('get.states');
+Route::get('get-cities/{state_id}', [LocationController::class, 'getCities'])->name('get.cities');
+
+>>>>>>> 23c30d7 (Escort project)
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -82,8 +164,11 @@ Route::group(['prefix' => '/'], function () {
     Route::get('support/report', [SupportController::class, 'report'])->name('support.report');
     Route::get('faqs/search', [SupportController::class, 'searchFaq'])->name('faqs.search');
 
+<<<<<<< HEAD
     // hjsb
 
+=======
+>>>>>>> 23c30d7 (Escort project)
     // Terms & privecy Policy
     Route::view('/terms', 'legal.terms')->name('terms');
     Route::view('/privacy', 'legal.privacy')->name('privacy');
@@ -132,6 +217,27 @@ Route::group(['prefix' => 'escort'], function () {
 
     Route::get('get-user-chat', [MessageController::class, 'getUserChat']);
 
+<<<<<<< HEAD
+=======
+    // Escort manage album photos
+    Route::get('photo', [PhotosController::class, 'photosManage'])->name('escort.photos');
+    Route::post('photo/', [PhotosController::class, 'photosStore'])->name('escort.photos.store');
+    Route::get('photos-list/{id}', [PhotosController::class, 'photosList'])->name('escort.photos.list');
+    Route::put('photos/{id}', [PhotosController::class, 'photosUpdate'])->name('escort.photos.update');
+    Route::delete('photos/{id}', [PhotosController::class, 'photosDestroy'])->name('escort.photos.delete');
+
+    // Escort manage album Videos
+    Route::get('video', [VideosController::class, 'videosManage'])->name('escort.videos');
+    Route::post('video/', [VideosController::class, 'videosStore'])->name('escort.videos.store');
+    Route::get('videos-list/{id}', [VideosController::class, 'videosList'])->name('escort.videos.list');
+    Route::put('videos/{id}', [VideosController::class, 'videosUpdate'])->name('escort.videos.update');
+    Route::delete('videos/{id}', [VideosController::class, 'videosDestroy'])->name('escort.videos.delete');
+
+    // Thumbnail upload route
+    Route::post('videos/add-thumbnail', [VideosController::class, 'addThumbnail'])->name('escort.videos.thumbnail');
+    Route::post('videos/thumbnail/remove', [VideosController::class, 'removeThumbnail'])->name('escort.videos.thumbnail.remove');
+
+>>>>>>> 23c30d7 (Escort project)
 
     Route::get('messages', [EscortDashboardController::class, 'messages'])->name('escort.messages');
     Route::get('verification', [EscortDashboardController::class, 'verification'])->name('escort.verification');
@@ -204,9 +310,32 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('update-escort-category/{id}', [SettingController::class, 'escortUpdate']);
     Route::delete('delete-escort-category/{id}', [SettingController::class, 'escortDestroy']);
 
+<<<<<<< HEAD
     Route::get('escort', [AdminDashboardController::class, 'escortCreate'])->name('admin.escort.create');
     Route::post('escort/store', [AdminDashboardController::class, 'escortStore'])->name('admin.escort.store');
     Route::get('escort-manage', [AdminDashboardController::class, 'escortManage'])->name('admin.escort.manage');
+=======
+    Route::get('escort-create', [AdminDashboardController::class, 'escortCreate'])->name('admin.escort.create');
+    Route::post('escort/store', [SettingController::class, 'escortStore'])->name('admin.escort.store');
+    Route::post('escort/store', [SettingController::class, 'escortStore'])->name('escort.store');
+
+    Route::get('escort-manage', [AdminDashboardController::class, 'escortManage'])->name('admin.escort.manage');
+    Route::post('escort-manage', [AdminDashboardController::class, 'escortManage'])->name('admin.escort.manage');
+
+
+    Route::get('escort-list', [SettingController::class, 'escortList'])->name('admin.escort.list');
+    Route::get('escorts/{id}/view', [SettingController::class, 'viewEscort'])->name('admin.escorts.view');
+    Route::get('escorts/{id}/edit', [SettingController::class, 'editEscort'])->name('admin.escorts.edit');
+    Route::put('escorts/{id}', [SettingController::class, 'updateEscort'])->name('admin.escorts.update');
+    Route::delete('escorts/{id}', [SettingController::class, 'deleteEscort'])->name('admin.escorts.destroy');
+
+
+
+
+
+
+
+>>>>>>> 23c30d7 (Escort project)
 
 
     // admin Fan Routes
@@ -217,6 +346,20 @@ Route::group(['prefix' => 'admin'], function () {
     Route::put('update-fan-category/{id}', [SettingController::class, 'fanUpdate']);
     Route::delete('delete-fan-category/{id}', [SettingController::class, 'fanDestroy']);
 
+<<<<<<< HEAD
+=======
+    // Country Management Routes
+
+    Route::get('countries/create', [DashboardController::class, 'createCountry'])->name('admin.countries.create');
+    Route::post('countries', [SettingController::class, 'storeCountry'])->name('admin.countries.store');
+    Route::get('countries/manage', [SettingController::class, 'manageCountries'])->name('admin.countries.manage');
+    Route::get('countries/{id}/edit', [SettingController::class, 'editCountry'])->name('admin.countries.edit');
+    Route::put('countries/{id}', [SettingController::class, 'updateCountry'])->name('admin.countries.update');
+    Route::delete('countries/{id}', [SettingController::class, 'deleteCountry'])->name('admin.countries.destroy');
+    Route::get('countries/{id}/view', [SettingController::class, 'viewCountry'])
+      ->name('admin.countries.view');
+
+>>>>>>> 23c30d7 (Escort project)
     // admin membership features
     Route::get('membership-features', [AdminDashboardController::class, 'membershipFeatures'])->name('admin.membership.features');
     Route::post('membership-features-add', [SettingController::class, 'mfeaturesStore'])->name('admin.mfeatures.store');
@@ -244,6 +387,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('payment-gateway-toggle', [SettingController::class, 'paymentGatewayToggle'])->name('admin.paymentGateway.toggle');
     Route::post('payment-gateway-mode', [SettingController::class, 'paymentGatewayMode'])->name('admin.paymentGateway.mode');
 
+<<<<<<< HEAD
     // admin  Escort Management Routes
     Route::get('escorts', [SettingController::class, 'escortManage'])->name('admin.escorts.index');
     // Route::post('escorts', [SettingController::class, 'storeEscort'])->name('admin.escorts.store');
@@ -261,6 +405,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('escort/store', [SettingController::class, 'storeEscort'])->name('admin.escort.store');
     ;
     Route::get('escort/create', [SettingController::class, 'showAddEscort'])->name('admin.escort.create');
+=======
+>>>>>>> 23c30d7 (Escort project)
 
     // Fan Management Routes
     Route::get('fans', [SettingController::class, 'fanManage'])->name('admin.fans.index');
@@ -273,10 +419,13 @@ Route::group(['prefix' => 'admin'], function () {
     // Fan Manage View Route
     Route::get('fan-manage', [SettingController::class, 'fanManageView'])->name('admin.fan.manage');
 
+<<<<<<< HEAD
     // ADD ESCORT ADMOIN PANEL 
     Route::post('admin/escort', [SettingController::class, 'storeEscort'])->name('admin.escort.store');
     Route::get('admin/escort-manage', [SettingController::class, 'escortManage'])->name('admin.escort-manage');
 
+=======
+>>>>>>> 23c30d7 (Escort project)
     // ADD fAQs ADMIN PANEL 
     Route::get('faqs', [FaqController::class, 'faqsManage'])->name('admin.faqs');
     Route::post('faqs/', [FaqController::class, 'faqsStore'])->name('admin.faqs.store');
